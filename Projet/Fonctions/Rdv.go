@@ -3,6 +3,7 @@ package Fonctions
 import (
 	"fmt"
 	"html/template"
+	db "marketplace/DataBase"
 	"net/http"
 	"strconv"
 	"time"
@@ -26,6 +27,8 @@ type MonthData struct {
 	NextYear  int
 	TimeSlots []string
 	Now       time.Time
+	IsConnect bool
+	User      db.DB
 }
 
 func RdvPage(w http.ResponseWriter, r *http.Request) {
@@ -72,6 +75,12 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	endDate := lastOfMonth.AddDate(0, 0, 6-int(lastOfMonth.Weekday()))
 
+	cookie, err := r.Cookie("user_id")
+	if err != nil {
+		http.Redirect(w, r, "/Authentication", http.StatusSeeOther)
+		return
+	}
+
 	// Préparation des données pour le template
 	data := MonthData{
 		Year:      year,
@@ -83,6 +92,8 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 		NextYear:  year,
 		TimeSlots: generateTimeSlots(),
 		Now:       now,
+		IsConnect: IsConnectStock,
+		User:      db.GetUser(cookie.Value),
 	}
 
 	// Ajustement pour janvier et décembre
