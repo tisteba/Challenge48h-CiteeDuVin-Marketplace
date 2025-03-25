@@ -62,10 +62,6 @@
                             États-Unis 
                         </label>
                         <label class="flex items-center">
-                            <input type="checkbox" value="Chili" class="origin mr-2">
-                            Chili 
-                        </label>
-                        <label class="flex items-center">
                             <input type="checkbox" value="International" class="origin mr-2">
                             International (autres pays) 
                         </label>
@@ -213,12 +209,11 @@
                     
                     const originMatch = selectedOrigins.length === 0 || 
                         (selectedOrigins.includes('France') && country === 'France') ||
-                        (selectedOrigins.includes('Italie') && country === 'Italie') ||
-                        (selectedOrigins.includes('Espagne') && country === 'Espagne') ||
-                        (selectedOrigins.includes('États-Unis') && country === 'États-Unis') ||
-                        (selectedOrigins.includes('Chili') && country === 'Chili') ||
+                        (selectedOrigins.includes('Italie') && country === 'Italy') ||
+                        (selectedOrigins.includes('Espagne') && country === 'Spain') ||
+                        (selectedOrigins.includes('États-Unis') && country === 'US') ||
                         (selectedOrigins.includes('International') && 
-                            !['France', 'Italie', 'Espagne', 'États-Unis', 'Chili'].includes(country));
+                            !['France', 'Italie', 'Espagne', 'États-Unis',].includes(country));
 
                     if (priceMatch && originMatch) {
                         card.classList.remove('hidden');
