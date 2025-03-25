@@ -1,7 +1,6 @@
 package Fonctions
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -28,5 +27,4 @@ func VinsMondePageGet(w http.ResponseWriter, r *http.Request) {
 
 func VinsMondePagePost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/VinsDuMonde", http.StatusSeeOther)
-	fmt.Println("")
 }

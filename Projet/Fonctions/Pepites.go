@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"sort"
 )
 
 type DataPepites struct {
@@ -46,10 +45,4 @@ func PepitesPageGet(w http.ResponseWriter, r *http.Request) {
 func PepitesPagePost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/NosPepites", http.StatusSeeOther)
 	fmt.Println("")
-}
-
-func SortWinesByPoints(wines []Wine) {
-	sort.Slice(wines, func(i, j int) bool {
-		return wines[i].Points < wines[j].Points
-	})
 }
