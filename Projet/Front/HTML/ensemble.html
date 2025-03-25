@@ -3,113 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Cave des Vins - Marketplace</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-        .hidden {
-            display: none !important;
-        }
-    </style>
+    <link rel="stylesheet" href="../CSS/ensemble.css">
 </head>
-<body class="bg-gray-50">
-    <header class="bg-white shadow-md">
-        <nav class="container mx-auto flex justify-between items-center p-4">
-            <div class="flex items-center">
-                <img src="/api/placeholder/100/50" alt="Logo" class="h-10 mr-4">
-                <ul class="flex space-x-6 text-gray-700">
-                    <li><a href="http://localhost:8080/TousLesVins" class="hover:text-amber-600">Tous nos Vins</a></li>
-                    <li><a href="#" class="hover:text-amber-600">Vins de France</a></li>
-                    <li><a href="#" class="hover:text-amber-600">Vins du Monde</a></li>
-                    <li><a href="#" class="hover:text-amber-600">Nos Pépites</a></li>
-                    <li><a href="#" class="hover:text-amber-600">Promotions</a></li>
-                </ul>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="logo">
+            </div>
+            
+            <!-- Mobile menu button (hidden on desktop) -->
+            <button id="mobile-menu-toggle" class="mobile-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        
+            <!-- Desktop navigation (hidden on mobile) -->
+            <ul class="desktop-nav">
+                <li><a href="http://localhost:8080/TousLesVins" class="nav-link">Tous nos Vins</a></li>
+                <li><a href="#" class="nav-link">Vins de France</a></li>
+                <li><a href="#" class="nav-link">Vins du Monde</a></li>
+                <li><a href="#" class="nav-link">Nos Pépites</a></li>
+                <li><a href="#" class="nav-link">Promotions</a></li>
+            </ul>
+            
+            <!-- Desktop search (hidden on mobile) -->
+            <div class="desktop-search">
+                <input type="text" placeholder="Rechercher" class="search-input">
+                <button class="login-button">Se Connecter</button>
             </div>
         </nav>
-        <!-- Bouton pour lancer le quiz -->
-<button id="quizButton" class="fixed bottom-4 right-4 bg-amber-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-amber-700">
-    Trouvez votre vin idéal
-</button>
-
-<!-- Modale du quiz -->
-<div id="quizModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold">Quiz - Trouvez votre vin idéal</h2>
-            <button id="closeQuiz" class="text-gray-500 hover:text-gray-700">
-                &times;
-            </button>
-        </div>
         
-        <div id="quizContainer">
-            <!-- Les questions seront injectées ici -->
+        <div id="mobile-menu" class="mobile-menu-overlay">
+            <div class="mobile-menu-header">
+                <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="mobile-logo">
+                <button id="mobile-menu-close" class="mobile-menu-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-menu-content">
+                <input type="text" placeholder="Rechercher" class="mobile-search-input">
+                <button class="mobile-login-button">Se Connecter</button>
+                <ul class="mobile-nav">
+                    <li><a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">Tous nos Vins</a></li>
+                    <li><a href="#" class="mobile-nav-link">Vins de France</a></li>
+                    <li><a href="#" class="mobile-nav-link">Vins du Monde</a></li>
+                    <li><a href="#" class="mobile-nav-link">Nos Pépites</a></li>
+                    <li><a href="#" class="mobile-nav-link">Promotions</a></li>
+                </ul>
+            </div>
         </div>
-        
-        <div class="flex justify-between mt-4">
-            <button id="prevQuestion" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hidden">Précédent</button>
-            <button id="nextQuestion" class="bg-amber-600 text-white px-4 py-2 rounded">Suivant</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modale des résultats -->
-<div id="resultsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold">Nos recommandations pour vous</h2>
-            <button id="closeResults" class="text-gray-500 hover:text-gray-700">
-                &times;
-            </button>
-        </div>
-        
-        <div id="recommendations" class="grid grid-cols-2 gap-4">
-            <!-- Les recommandations seront injectées ici -->
-        </div>
-        
-        <div class="mt-4 text-center">
-            <button id="restartQuiz" class="bg-amber-600 text-white px-4 py-2 rounded">
-                Refaire le quiz
-            </button>
-        </div>
-    </div>
-</div>
     </header>
 
-    <main class="container mx-auto mt-8">
-        <div class="flex">
+    <main class="main-container">
+        <div class="page-layout">
             <!-- Filtres -->
-            <aside class="w-1/4 pr-8">
-                <h2 class="text-xl font-bold mb-4">Filtres</h2>
-                <div class="bg-white p-4 rounded-lg shadow-md">
-                    <h3 class="font-semibold mb-2">Prix</h3>
-                    <input id="priceRange" type="range" min="8" max="800" value="800" class="w-full">
-                    <div class="flex justify-between text-sm text-gray-600">
+            <aside class="filters-sidebar">
+                <h2 class="filters-title">Filtres</h2>
+                <div class="filters-container">
+                    <h3 class="filter-heading">Prix</h3>
+                    <input id="priceRange" type="range" min="8" max="800" value="800" class="price-slider">
+                    <div class="price-labels">
                         <span>8€</span>
                         <span id="priceValue">800€</span>
                     </div>
 
-                    <h3 class="font-semibold mt-4 mb-2">Origine</h3>
-                    <div class="space-y-2">
-                        <label class="flex items-center">
-                            <input type="checkbox" value="France" class="origin mr-2">
+                    <h3 class="filter-heading">Origine</h3>
+                    <div class="origin-options">
+                        <label class="origin-label">
+                            <input type="checkbox" value="France" class="origin-checkbox">
                             France 
                         </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" value="Italie" class="origin mr-2">
+                        <label class="origin-label">
+                            <input type="checkbox" value="Italie" class="origin-checkbox">
                             Italie 
                         </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" value="Espagne" class="origin mr-2">
+                        <label class="origin-label">
+                            <input type="checkbox" value="Espagne" class="origin-checkbox">
                             Espagne 
                         </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" value="États-Unis" class="origin mr-2">
+                        <label class="origin-label">
+                            <input type="checkbox" value="États-Unis" class="origin-checkbox">
                             États-Unis 
                         </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" value="International" class="origin mr-2">
+                        <label class="origin-label">
+                            <input type="checkbox" value="International" class="origin-checkbox">
                             International (autres pays) 
                         </label>
                     </div>
@@ -117,12 +100,12 @@
             </aside>
 
             <!-- Produits -->
-            <section class="w-3/4">
-                <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-bold">Vins du Monde</h1>
-                    <div class="flex items-center">
-                        <span class="mr-2">Trier par:</span>
-                        <select id="sortSelect" class="border rounded px-2 py-1">
+            <section class="products-section">
+                <div class="products-header">
+                    <h1 class="section-title">Vins du Monde</h1>
+                    <div class="sort-container">
+                        <span class="sort-label">Trier par:</span>
+                        <select id="sortSelect" class="sort-select">
                             <option value="points">Meilleures notes</option>
                             <option value="priceAsc">Prix croissant</option>
                             <option value="priceDesc">Prix décroissant</option>
@@ -130,71 +113,140 @@
                     </div>
                 </div>
 
-                <div id="wineGrid" class="grid grid-cols-3 gap-6">
+                <div id="wineGrid" class="wine-grid">
                     {{range .WineList}}
-                        <div class="wine-card relative bg-white rounded-lg shadow-md p-4 text-center" 
+                        <div class="wine-card" 
                              data-price="{{.Price}}" 
                              data-variety="{{.Variety}}" 
                              data-country="{{.Country}}"
                              data-points="{{.Points}}">
-                            <p class="absolute left-2 top-2 font-bold">{{.Points}}</p>
-                            <h3 class="font-semibold">{{.Winery}}</h3>
-                            <p class="text-gray-600">{{.Variety}}</p>
-                            <div class="flex justify-between items-center mt-4">
-                                <span class="font-bold text-amber-600">{{.Price}} €</span>
-                                <button class="bg-green-500 text-white px-4 py-2 rounded-full">Ajouter</button>
+                            <p class="wine-points">{{.Points}}</p>
+                            <h3 class="wine-winery">{{.Winery}}</h3>
+                            <p class="wine-variety">{{.Variety}}</p>
+                            <div class="wine-footer">
+                                <span class="wine-price">{{.Price}} €</span>
+                                <button class="add-button">Ajouter</button>
                             </div>
                         </div>
                     {{end}}
                 </div>
 
-                <div class="flex justify-center mt-8">
-                    <button class="bg-amber-500 text-white px-6 py-2 rounded-full">Charger plus</button>
+                <div class="more-button-container">
+                    <button class="more-button">Charger plus</button>
                 </div>
             </section>
         </div>
     </main>
 
-    <footer class="bg-gray-800 text-white mt-12 py-8">
-        <div class="container mx-auto grid grid-cols-4 gap-8">
-            <div>
-                <h4 class="font-bold mb-4">Nos Vins</h4>
-                <ul>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Vins de France</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Vins Internationaux</a></li>
+    <!-- Quiz Button -->
+    <button id="quizButton" class="quiz-button">
+        Trouvez votre vin idéal
+    </button>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Quiz - Trouvez votre vin idéal</h2>
+                <button id="closeQuiz" class="close-modal">&times;</button>
+            </div>
+            
+            <div id="quizContainer"></div>
+            
+            <div class="modal-footer">
+                <button id="prevQuestion" class="secondary-button hidden">Précédent</button>
+                <button id="nextQuestion" class="primary-button">Suivant</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div id="resultsModal" class="modal hidden">
+        <div class="modal-content wide-modal">
+            <div class="modal-header">
+                <h2>Nos recommandations pour vous</h2>
+                <button id="closeResults" class="close-modal">&times;</button>
+            </div>
+            
+            <div id="recommendations" class="recommendations-grid"></div>
+            
+            <div class="modal-footer center">
+                <button id="restartQuiz" class="primary-button">
+                    Refaire le quiz
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4 class="footer-title">Nos Vins</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Vins de France</a></li>
+                    <li><a href="#" class="footer-link">Vins Internationaux</a></li>
                 </ul>
             </div>
-            <div>
-                <h4 class="font-bold mb-4">Services</h4>
-                <ul>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Livraison</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Conseil</a></li>
+            <div class="footer-column">
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Livraison</a></li>
+                    <li><a href="#" class="footer-link">Conseil</a></li>
                 </ul>
             </div>
-            <div>
-                <h4 class="font-bold mb-4">À Propos</h4>
-                <ul>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Notre Histoire</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Nos Vignerons</a></li>
+            <div class="footer-column">
+                <h4 class="footer-title">À Propos</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Notre Histoire</a></li>
+                    <li><a href="#" class="footer-link">Nos Vignerons</a></li>
                 </ul>
             </div>
-            <div>
-                <h4 class="font-bold mb-4">Contact</h4>
-                <ul>
-                    <li><a href="#" class="text-gray-300 hover:text-white">Nous Contacter</a></li>
+            <div class="footer-column">
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Nous Contacter</a></li>
                 </ul>
             </div>
         </div>
     </footer>
 
     <script>
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+    
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.style.display = 'block';
+        });
+    
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.style.display = 'none';
+        });
+    
         document.addEventListener('DOMContentLoaded', () => {
+            // Price range slider fill effect
             const priceRange = document.getElementById('priceRange');
             const priceValue = document.getElementById('priceValue');
-            const origins = document.querySelectorAll('.origin');
+            const origins = document.querySelectorAll('.origin-checkbox');
             const sortSelect = document.getElementById('sortSelect');
             const wineCards = document.querySelectorAll('.wine-card');
-
+    
+            // Initialize price slider fill
+            function updateSliderFill() {
+                const value = priceRange.value;
+                const max = priceRange.max;
+                const min = priceRange.min;
+                const percent = ((value - min) / (max - min)) * 100;
+                
+                // Update the fill percentage
+                priceRange.style.setProperty('--fill-percent', `${percent}%`);
+                priceValue.textContent = `${value}€`;
+            }
+            
+            // Initialize and add event listener
+            updateSliderFill();
+            
             // Fonction de debounce pour limiter les appels fréquents
             function debounce(func, timeout = 300){
                 let timer;
@@ -203,29 +255,29 @@
                     timer = setTimeout(() => { func.apply(this, args); }, timeout);
                 };
             }
-
+    
             // Mise à jour du prix
             priceRange.addEventListener('input', debounce(() => {
-                priceValue.textContent = `${priceRange.value}€`;
+                updateSliderFill();
                 applyFilters();
             }));
-
+    
             // Filtres d'origine
             origins.forEach(el => {
                 el.addEventListener('change', debounce(applyFilters));
             });
-
+    
             // Tri 
             sortSelect.addEventListener('change', () => {
                 const cards = Array.from(wineCards);
                 const sortMethod = sortSelect.value;
-
+    
                 cards.sort((a, b) => {
                     const priceA = parseInt(a.dataset.price);
                     const priceB = parseInt(b.dataset.price);
                     const pointsA = parseInt(a.dataset.points);
                     const pointsB = parseInt(b.dataset.points);
-
+    
                     switch(sortMethod) {
                         case 'priceAsc':
                             return priceA - priceB;
@@ -235,23 +287,22 @@
                             return pointsB - pointsA;
                     }
                 });
-
+    
                 const wineGrid = document.getElementById('wineGrid');
                 cards.forEach(card => wineGrid.appendChild(card));
                 applyFilters();
             });
-
+    
             function applyFilters() {
                 const startTime = performance.now();
                 
                 wineCards.forEach(card => {
                     const price = parseInt(card.dataset.price);
                     const country = card.dataset.country;
-
-                    const selectedOrigins = Array.from(origins)
-                        .filter(el => el.checked)
+    
+                    const selectedOrigins = Array.from(document.querySelectorAll('.origin-checkbox:checked'))
                         .map(el => el.value);
-
+    
                     const priceMatch = price <= parseInt(priceRange.value);
                     
                     const originMatch = selectedOrigins.length === 0 || 
@@ -260,19 +311,19 @@
                         (selectedOrigins.includes('Espagne') && country === 'Spain') ||
                         (selectedOrigins.includes('États-Unis') && country === 'US') ||
                         (selectedOrigins.includes('International') && 
-                            !['France', 'Italie', 'Espagne', 'États-Unis',].includes(country));
-
+                            !['France', 'Italy', 'Spain', 'US'].includes(country));
+    
                     if (priceMatch && originMatch) {
                         card.classList.remove('hidden');
                     } else {
                         card.classList.add('hidden');
                     }
                 });
-
+    
                 const endTime = performance.now();
                 console.log(`Filtering took ${endTime - startTime} milliseconds`);
             }
-
+    
             // Tri initial par défaut (meilleures notes)
             sortSelect.dispatchEvent(new Event('change'));
         });
@@ -293,43 +344,43 @@
             
             // Questions du quiz
             const questions = [
-    {
-        question: "Quel type de vin préférez-vous ?",
-        key: "variety",
-        answers: [
-            { text: "Rouge corsé (Cabernet, Syrah)", value: ["Cabernet Sauvignon", "Rhône-style Red Blend"] },
-            { text: "Rouge léger (Pinot Noir)", value: ["Pinot Noir"] },
-            { text: "Blanc sec (Chardonnay, Sauvignon)", value: ["Chardonnay", "Sauvignon Blanc", "Rhône-style White Blend"] },
-            { text: "Rosé", value: ["Rosé"] }
-        ]
-    },
-    {
-        question: "Quel est votre budget approximatif ?",
-        key: "price",
-        answers: [
-            { text: "Moins de 30€", value: [0, 30] },
-            { text: "30€ à 60€", value: [30, 60] },
-            { text: "60€ à 100€", value: [60, 100] },
-            { text: "Plus de 100€", value: [100, 1000] }
-        ]
-    },
-    {
-        question: "Quelle région vous intéresse ?",
-        key: "country",
-        answers: [
-            { text: "France", value: ["France"] },
-            { text: "Italie", value: ["Italy"] }, 
-            { text: "Espagne", value: ["Spain"] },
-            { text: "États-Unis", value: ["US"] },
-            { text: "Autres pays", value: ["International"] }
-        ]
-    }
-];
+                {
+                    question: "Quel type de vin préférez-vous ?",
+                    key: "variety",
+                    answers: [
+                        { text: "Rouge corsé (Cabernet, Syrah)", value: ["Cabernet Sauvignon", "Rhône-style Red Blend"] },
+                        { text: "Rouge léger (Pinot Noir)", value: ["Pinot Noir"] },
+                        { text: "Blanc sec (Chardonnay, Sauvignon)", value: ["Chardonnay", "Sauvignon Blanc", "Rhône-style White Blend"] },
+                        { text: "Rosé", value: ["Rosé"] }
+                    ]
+                },
+                {
+                    question: "Quel est votre budget approximatif ?",
+                    key: "price",
+                    answers: [
+                        { text: "Moins de 30€", value: [0, 30] },
+                        { text: "30€ à 60€", value: [30, 60] },
+                        { text: "60€ à 100€", value: [60, 100] },
+                        { text: "Plus de 100€", value: [100, 1000] }
+                    ]
+                },
+                {
+                    question: "Quelle région vous intéresse ?",
+                    key: "country",
+                    answers: [
+                        { text: "France", value: ["France"] },
+                        { text: "Italie", value: ["Italy"] }, 
+                        { text: "Espagne", value: ["Spain"] },
+                        { text: "États-Unis", value: ["US"] },
+                        { text: "Autres pays", value: ["International"] }
+                    ]
+                }
+            ];
             
             // Variables d'état
             let currentQuestion = 0;
             let answers = {};
-            let wineList = []; // Cette variable contiendra la liste des vins
+            let wineList = [];
             
             // Charger la liste des vins depuis les cartes existantes
             function loadWineList() {
@@ -340,8 +391,8 @@
                     price: parseInt(card.dataset.price),
                     variety: card.dataset.variety,
                     country: card.dataset.country,
-                    description: card.querySelector('p.text-gray-600').textContent.toLowerCase(),
-                    winery: card.querySelector('h3').textContent
+                    winery: card.querySelector('.wine-winery').textContent,
+                    varietyText: card.querySelector('.wine-variety').textContent
                 }));
             }
             
@@ -399,26 +450,30 @@
             
             // Afficher la question actuelle
             function showQuestion() {
-                const question = questions[currentQuestion];
-                
-                let html = `
-                    <div class="mb-4">
-                        <h3 class="text-lg font-semibold mb-2">${question.question}</h3>
-                        <div class="space-y-2">
+            const question = questions[currentQuestion];
+            
+            let html = `
+                <div style="margin-bottom: 1rem;">
+                    <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">${question.question}</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            `;
+            
+            question.answers.forEach((answer, index) => {
+                html += `
+                    <label style="display: flex; align-items: center; padding: 0.75rem; 
+                                border-radius: 0.375rem; border: 1px solid #e5e7eb;
+                                background-color: white; cursor: pointer;
+                                transition: background-color 0.2s;">
+                        <input type="radio" name="quizAnswer" value='${JSON.stringify(answer.value)}' 
+                               style="margin-right: 0.75rem; height: 1.25rem; width: 1.25rem;" 
+                               ${index === 0 ? 'checked' : ''}>
+                        <span style="color: #374151;">${answer.text}</span>
+                    </label>
                 `;
-                
-                question.answers.forEach((answer, index) => {
-                    html += `
-                        <label class="flex items-center p-2 rounded hover:bg-gray-100">
-                            <input type="radio" name="quizAnswer" value='${JSON.stringify(answer.value)}' 
-                                   class="mr-2" ${index === 0 ? 'checked' : ''}>
-                            ${answer.text}
-                        </label>
-                    `;
-                });
-                
-                html += `</div></div>`;
-                quizContainer.innerHTML = html;
+            });
+            
+            html += `</div></div>`;
+            quizContainer.innerHTML = html;
                 
                 // Gérer les boutons précédent/suivant
                 prevQuestion.classList.toggle('hidden', currentQuestion === 0);
@@ -426,92 +481,94 @@
             }
             
             // Afficher les résultats
-            // Remplacer la fonction showResults par cette version améliorée
             function showResults() {
-    quizModal.classList.add('hidden');
-    resultsModal.classList.remove('hidden');
-    
-    // Debug: afficher les réponses et les premiers vins
-    console.log("Réponses du quiz:", answers);
-    console.log("Exemple de vin:", wineList[0]);
-    
-    const filteredWines = filterWines(wineList, answers);
-    filteredWines.sort((a, b) => b.points - a.points);
-    
-    let html = '';
-    const toShow = filteredWines.slice(0, 6);
-    
-    if (toShow.length === 0) {
-        html = '<p class="col-span-2 text-center py-4">Aucun vin exact ne correspond à vos critères. Voici nos suggestions élargies :</p>';
-        
-        // Fallback 1: Relâcher les contraintes une par une
-        const relaxedAnswers = {...answers};
-        delete relaxedAnswers.country;
-        const fallback1 = filterWines(wineList, relaxedAnswers);
-        
-        if (fallback1.length > 0) {
-            fallback1.sort((a, b) => b.points - a.points).slice(0, 6).forEach(wine => {
-                html += createWineCard(wine);
-            });
-        } else {
-            // Fallback 2: Afficher les meilleurs vins tout court
-            wineList.sort((a, b) => b.points - a.points).slice(0, 3).forEach(wine => {
-                html += createWineCard(wine);
-            });
-        }
-    } else {
-        toShow.forEach(wine => {
-            html += createWineCard(wine);
-        });
-    }
-    
-    recommendations.innerHTML = html;
-}
-
-function createWineCard(wine) {
-    return `
-        <div class="border rounded p-4">
-            <h3 class="font-bold">${wine.winery}</h3>
-            <p class="text-gray-600">${wine.variety} (${wine.country})</p>
-            <p class="text-amber-600 font-bold mt-2">${wine.price} €</p>
-            <p class="text-sm mt-1">Note: ${wine.points}/100</p>
-            <p class="text-xs mt-1 text-gray-500">${wine.description.substring(0, 60)}...</p>
-        </div>
-    `;
-}
-
-function filterWines(wines, answers) {
-    return wines.filter(wine => {
-        // Vérification du prix
-        if (answers.price) {
-            const [minPrice, maxPrice] = answers.price;
-            if (wine.price < minPrice || wine.price > maxPrice) return false;
-        }
-
-        // Vérification du pays
-        if (answers.country) {
-            if (answers.country.includes("International")) {
-                if (["France", "Italy", "Spain", "US"].includes(wine.country)) return false;
-            } else {
-                if (!answers.country.includes(wine.country)) return false;
+                quizModal.classList.add('hidden');
+                resultsModal.classList.remove('hidden');
+                
+                const filteredWines = filterWines(wineList, answers);
+                filteredWines.sort((a, b) => b.points - a.points);
+                
+                let html = '';
+                const toShow = filteredWines.slice(0, 6);
+                
+                if (toShow.length === 0) {
+                    html = '<p class="col-span-2 text-center py-4">Aucun vin exact ne correspond à vos critères. Voici nos suggestions élargies :</p>';
+                    
+                    // Fallback 1: Relâcher les contraintes une par une
+                    const relaxedAnswers = {...answers};
+                    delete relaxedAnswers.country;
+                    const fallback1 = filterWines(wineList, relaxedAnswers);
+                    
+                    if (fallback1.length > 0) {
+                        fallback1.sort((a, b) => b.points - a.points).slice(0, 6).forEach(wine => {
+                            html += createWineCard(wine);
+                        });
+                    } else {
+                        // Fallback 2: Afficher les meilleurs vins tout court
+                        wineList.sort((a, b) => b.points - a.points).slice(0, 3).forEach(wine => {
+                            html += createWineCard(wine);
+                        });
+                    }
+                } else {
+                    toShow.forEach(wine => {
+                        html += createWineCard(wine);
+                    });
+                }
+                
+                recommendations.innerHTML = html;
             }
+    
+            function createWineCard(wine) {
+            return `
+                <div style="border: 1px solid #e5e7eb; 
+                            border-radius: 8px; 
+                            padding: 16px;
+                            margin-bottom: 12px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                            transition: transform 0.2s ease;
+                            background: white;">
+                    <h3 style="font-weight: 600; margin-bottom: 4px;">${wine.winery}</h3>
+                    <p style="color: #6b7280; margin-bottom: 8px;">${wine.varietyText}</p>
+                    <p style="color: #DA4B66; font-weight: 700; margin-bottom: 4px;">${wine.price} €</p>
+                    <p style="font-size: 0.875rem; color: #6b7280;">Note: ${wine.points}/100</p>
+                </div>
+            `;
         }
-
-        // Vérification du cépage
-        if (answers.variety) {
-            const varietyMatch = answers.variety.some(variety => {
-                // Gestion spéciale pour les blends
-                if (variety === "Rhône-style Red Blend" && wine.variety.includes("Rhône")) return true;
-                if (variety === "Rhône-style White Blend" && wine.variety.includes("Rhône")) return true;
-                return wine.variety === variety;
-            });
-            if (!varietyMatch) return false;
-        }
-
-        return true;
-    });
-}
+    
+            function filterWines(wines, answers) {
+                return wines.filter(wine => {
+                    // Vérification du prix
+                    if (answers.price) {
+                        const [minPrice, maxPrice] = answers.price;
+                        if (wine.price < minPrice || wine.price > maxPrice) return false;
+                    }
+    
+                    // Vérification du pays
+                    if (answers.country) {
+                        if (answers.country.includes("International")) {
+                            if (["France", "Italy", "Spain", "US"].includes(wine.country)) return false;
+                        } else {
+                            if (!answers.country.includes(wine.country)) return false;
+                        }
+                    }
+    
+                    // Vérification du cépage
+                    if (answers.variety) {
+                        const varietyMatch = answers.variety.some(variety => {
+                            // Gestion spéciale pour les blends
+                            if (variety === "Rhône-style Red Blend" && wine.variety.includes("Rhône")) return true;
+                            if (variety === "Rhône-style White Blend" && wine.variety.includes("Rhône")) return true;
+                            return wine.variety === variety;
+                        });
+                        if (!varietyMatch) return false;
+                    }
+    
+                    return true;
+                });
+            }
         });
     </script>
+
+
 </body>
 </html>
