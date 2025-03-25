@@ -124,17 +124,17 @@
                 </div>
 
                 <div id="wineGrid" class="wine-grid">
-                    {{range .WineList}}
-                        <div class="wine-card" 
-                             data-price="{{.Price}}" 
-                             data-variety="{{.Variety}}" 
-                             data-country="{{.Country}}"
-                             data-points="{{.Points}}">
-                            <p class="wine-points">{{.Points}}</p>
-                            <h3 class="wine-winery">{{.Winery}}</h3>
-                            <p class="wine-variety">{{.Variety}}</p>
+                    {{range $index, $wine := .WineList}}
+                        <div class="wine-card {{if ge $index 24}}hidden{{end}}" 
+                             data-price="{{$wine.Price}}" 
+                             data-variety="{{$wine.Variety}}" 
+                             data-country="{{$wine.Country}}"
+                             data-points="{{$wine.Points}}">
+                            <p class="wine-points">{{$wine.Points}}</p>
+                            <h3 class="wine-winery">{{$wine.Winery}}</h3>
+                            <p class="wine-variety">{{$wine.Variety}}</p>
                             <div class="wine-footer">
-                                <span class="wine-price">{{.Price}} €</span>
+                                <span class="wine-price">{{$wine.Price}} €</span>
                                 <button class="add-button">Ajouter</button>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                 </div>
 
                 <div class="more-button-container">
-                    <button class="more-button">Charger plus</button>
+                    <button id="loadMoreButton" class="more-button">Voir plus</button>
                 </div>
             </section>
         </div>
@@ -241,7 +241,50 @@
             const origins = document.querySelectorAll('.origin-checkbox');
             const sortSelect = document.getElementById('sortSelect');
             const wineCards = document.querySelectorAll('.wine-card');
-    
+            const loadMoreButton = document.getElementById('loadMoreButton');
+            
+            // Variables pour la pagination
+            let visibleCount = 24;
+            const increment = 24;
+            
+            // Initialiser l'affichage des cartes
+            function initWineDisplay() {
+                wineCards.forEach((card, index) => {
+                    if (index < visibleCount) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                
+                // Masquer le bouton "Voir plus" si tous les vins sont affichés
+                if (visibleCount >= wineCards.length) {
+                    loadMoreButton.style.display = 'none';
+                } else {
+                    loadMoreButton.style.display = 'block';
+                }
+            }
+            
+            // Charger plus de vins
+            loadMoreButton.addEventListener('click', () => {
+                visibleCount += increment;
+                
+                // Afficher les cartes supplémentaires
+                wineCards.forEach((card, index) => {
+                    if (index < visibleCount) {
+                        card.classList.remove('hidden');
+                    }
+                });
+                
+                // Masquer le bouton si on a tout affiché
+                if (visibleCount >= wineCards.length) {
+                    loadMoreButton.style.display = 'none';
+                }
+                
+                // Réappliquer les filtres après avoir chargé plus de vins
+                applyFilters();
+            });
+            
             // Initialize price slider fill
             function updateSliderFill() {
                 const value = priceRange.value;
@@ -306,7 +349,10 @@
             function applyFilters() {
                 const startTime = performance.now();
                 
-                wineCards.forEach(card => {
+                wineCards.forEach((card, index) => {
+                    // Ne pas traiter les cartes qui ne sont pas encore chargées
+                    if (index >= visibleCount) return;
+                    
                     const price = parseInt(card.dataset.price);
                     const country = card.dataset.country;
     
@@ -334,6 +380,9 @@
                 console.log(`Filtering took ${endTime - startTime} milliseconds`);
             }
     
+            // Initialiser l'affichage
+            initWineDisplay();
+            
             // Tri initial par défaut (meilleures notes)
             sortSelect.dispatchEvent(new Event('change'));
         });
