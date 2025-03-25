@@ -32,12 +32,12 @@ func PepitesPageGet(w http.ResponseWriter, r *http.Request) {
 	SortWinesByPoints(wines)
 
 	var wine12 []Wine
-	for i := len(wines); i > len(wines)-12; i-- {
+	for i := len(wines) - 1; i > len(wines)-13; i-- {
 		wine12 = append(wine12, wines[i])
 	}
 
 	data := DataPepites{
-		WineList: wines,
+		WineList: wine12,
 	}
 	tmpl.Execute(w, data)
 }
