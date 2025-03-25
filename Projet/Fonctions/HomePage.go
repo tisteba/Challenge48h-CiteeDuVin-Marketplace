@@ -3,7 +3,9 @@ package Fonctions
 import (
 	"fmt"
 	"html/template"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 type DataHome struct {
@@ -29,8 +31,16 @@ func HomePageGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var wine9 []Wine
+	for i := 0; i < 9; i++ {
+		rand.Seed(time.Now().UnixNano()) // Initialisation avec le temps actuel pour éviter la répétition
+		nombre := rand.Intn(10000)
+
+		wine9 = append(wine9, wines[nombre])
+	}
+
 	data := DataHome{
-		WineList: wines,
+		WineList: wine9,
 	}
 	tmpl.Execute(w, data)
 }
