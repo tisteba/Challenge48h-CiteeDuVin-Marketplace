@@ -3,13 +3,18 @@ package Fonctions
 import (
 	"fmt"
 	"html/template"
+	db "marketplace/DataBase"
 	"math/rand"
 	"net/http"
 	"time"
 )
 
+var IsConnectStock bool
+
 type DataHome struct {
-	WineList []Wine
+	WineList  []Wine
+	IsConnect bool
+	User      db.DB
 }
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -39,8 +44,16 @@ func HomePageGet(w http.ResponseWriter, r *http.Request) {
 		wine9 = append(wine9, wines[nombre])
 	}
 
+	cookie, err := r.Cookie("user_id")
+	if err != nil {
+		http.Redirect(w, r, "/Authentication", http.StatusSeeOther)
+		return
+	}
+
 	data := DataHome{
-		WineList: wine9,
+		WineList:  wine9,
+		IsConnect: IsConnectStock,
+		User:      db.GetUser(cookie.Value),
 	}
 	tmpl.Execute(w, data)
 }
@@ -52,4 +65,8 @@ func HomePagePost(w http.ResponseWriter, r *http.Request) {
 
 func RedirectBasePage(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
+}
+
+func SetUpConnect() {
+	IsConnectStock = true
 }

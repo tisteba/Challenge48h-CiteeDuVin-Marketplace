@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Cave des Vins - Marketplace</title>
     <link rel="icon" href="https://www.theatreponttournant.com/wp-content/uploads/2019/07/cit%C3%A9-du-vin-logo.jpg" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/HomePage.css">
+    <link rel="stylesheet" href="../CSS/rdv.css">
 </head>
 <body>
     <header class="header">
@@ -38,13 +38,9 @@
             <!-- Desktop search and login - hidden on mobile -->
             <div class="desktop-search">
                 <input type="text" placeholder="Rechercher" class="search-input">
-                {{if .IsConnect}}
-                    <p class="mobile-nav-link">{{.User.Prenom}}</p>
-                {{else}}
-                    <a href="http://localhost:8080/Connexion">
-                    <button class="login-button">Se Connecter</button>
-                    </a>
-                {{end}}
+                <a href="http://localhost:8080/Connexion">
+                    <button class="mobile-login-button">Se Connecter</button>
+                </a>
             </div>
         </nav>
         
@@ -62,63 +58,21 @@
             </div>
             <div class="mobile-menu-content">
                 <input type="text" placeholder="Rechercher" class="mobile-search-input">
-                {{if .IsConnect}}
-                    <p class="mobile-nav-link">{{.User.Prenom}}</p>
-                {{else}}
-                    <a href="http://localhost:8080/Connexion">
-                    <button class="login-button">Se Connecter</button>
+                <a href="http://localhost:8080/Connexion">
+                    <button class="mobile-login-button">Se Connecter</button>
                     </a>
-                {{end}}
                 <ul class="mobile-nav">
-                    <li><a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">Tous nos Vins</a></li>
-                    <li><a href="http://localhost:8080/VinsDeFrance" class="mobile-nav-link">Vins de France</a></li>
-                    <li><a href="http://localhost:8080/VinsDuMonde" class="mobile-nav-link">Vins du Monde</a></li>
-                    <li><a href="http://localhost:8080/NosPepites" class="mobile-nav-link">Nos Pépites</a></li>
-                    <li><a href="#" class="mobile-nav-link">Nos Enchères</a></li>
-                    <li><a href="http://localhost:8080/Quiz" class="mobile-nav-link">Quiz</a></li>
+                    <li><a href="http://localhost:8080/TousLesVins" class="nav-link">Tous nos Vins</a></li>
+                    <li><a href="http://localhost:8080/VinsDeFrance" class="nav-link">Vins de France</a></li>
+                    <li><a href="http://localhost:8080/VinsDuMonde" class="nav-link">Vins du Monde</a></li>
+                    <li><a href="http://localhost:8080/NosPepites" class="nav-link">Nos Pépites</a></li>
+                    <li><a href="#" class="nav-link">Nos Enchères</a></li>
+                    <li><a href="http://localhost:8080/Quiz" class="nav-link">Quiz</a></li>
                 </ul>
             </div>
         </div>
     </header>
-
-    <main class="main-container">
-        <div class="main-content">
-            <section class="wine-section">
-                <div class="section-header">
-                    <h1 class="section-title">Vins du Monde</h1>
-                </div>
-
-                <div class="wine-grid">
-                    {{range .WineList}}
-                        <div class="wine-card">
-                            <p class="wine-points">{{.Points}}</p>
-                            <h3 class="wine-winery">{{.Winery}}</h3>
-                            <p class="wine-variety">{{.Variety}}</p>
-                            <div class="wine-footer">
-                                <span class="wine-price">{{.Price}} €</span>
-                                <button class="add-button">Ajouter</button>
-                            </div>
-                        </div>
-                    {{end}}
-                </div>
-
-                <div class="more-button-container">
-                    <a href="http://localhost:8080/PriseRdv" class="mobile-nav-link">
-                        <button class="more-button">Réserver une dégustation</button>
-                    </a>
-                </div>
-
-                <div class="more-button-container">
-                    <a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">
-                        <button class="more-button">Voir plus de vins</button>
-                    </a>
-                </div>
-            </section>
-        </div>
-
-
-    </main>
-
+    
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
@@ -150,20 +104,5 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        // Mobile Menu Toggle - Make sure this is in your HTML
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenuClose = document.getElementById('mobile-menu-close');
-        const mobileMenu = document.getElementById('mobile-menu');
-    
-        mobileMenuToggle.addEventListener('click', () => {
-            mobileMenu.style.display = 'block'; // Changed from classList to style
-        });
-    
-        mobileMenuClose.addEventListener('click', () => {
-            mobileMenu.style.display = 'none'; // Changed from classList to style
-        });
-    </script>
 </body>
 </html>

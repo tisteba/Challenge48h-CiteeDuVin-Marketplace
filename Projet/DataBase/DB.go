@@ -72,6 +72,22 @@ func GetDB() []DB {
 	return donnes
 }
 
+func GetUser(id string) DB {
+	db := connect_DB()
+	defer db.Close()
+
+	var base DB
+	query := `SELECT id, prenom, nom, email, password, solde FROM users WHERE id = ?;`
+
+	err := db.QueryRow(query, id).Scan(&base.ID, &base.Prenom, &base.Nom, &base.Email, &base.Mdp, &base.Solde)
+	if err != nil {
+		fmt.Println("Erreur lors de la récupération de l'utilisateur :", err)
+		return DB{}
+	}
+
+	return base
+}
+
 func InsertUser(prenom string, nom string, password string, email string) {
 	db := connect_DB()
 

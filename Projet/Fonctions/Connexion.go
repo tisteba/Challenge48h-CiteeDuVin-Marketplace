@@ -56,6 +56,7 @@ func ConnexionPost(w http.ResponseWriter, r *http.Request) {
 				Expires:  time.Now().Add(24 * time.Hour),
 				HttpOnly: true,
 			}
+			SetUpConnect()
 			http.SetCookie(w, &cookie)
 			http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
 			return
