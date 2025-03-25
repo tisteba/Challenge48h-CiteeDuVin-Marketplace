@@ -10,7 +10,7 @@ type DataEnsemble struct {
 	WineList []Wine
 }
 
-func EnsembleVins(w http.ResponseWriter, r *http.Request) {
+func EnsembleVinsPage(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		EnsembleVinsGet(w, r)
@@ -29,17 +29,16 @@ func EnsembleVinsGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := DataHome{
+	data := DataEnsemble{
 		WineList: wines,
 	}
 	tmpl.Execute(w, data)
 }
 
 func EnsembleVinsPost(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
-	fmt.Println("")
+	http.Redirect(w, r, "/TousTousLesVins", http.StatusSeeOther)
 }
 
 func RedirectBasePage(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
+	http.Redirect(w, r, "/TousLesVins", http.StatusSeeOther)
 }

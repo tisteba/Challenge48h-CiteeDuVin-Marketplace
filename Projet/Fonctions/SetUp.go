@@ -10,5 +10,6 @@ func SetHttp() {
 
 	http.HandleFunc("/", RedirectBasePage)
 	http.HandleFunc("/HomePage", HomePage)
-	http.HandleFunc("/TousLesVins", EnsembleVins)
+	http.HandleFunc("/TousLesVins", EnsembleVinsPage)
+	http.HandleFunc("/VinsDeFrance", VinsFrancePage)
 }
