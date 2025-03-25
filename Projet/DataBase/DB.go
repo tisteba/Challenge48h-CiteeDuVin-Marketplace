@@ -35,7 +35,7 @@ func CreateTableUsers() {
 
 	// Structure de notre base de donnée
 	query := ` 
-	CREATE TABLE IF NOT EXISTS user (
+	CREATE TABLE IF NOT EXISTS users (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		prenom TEXT NOT NULL,
 		nom TEXT NOT NULL,
@@ -47,7 +47,7 @@ func CreateTableUsers() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Table 'user' créée avec succès.")
+	fmt.Println("Table 'users' créée avec succès.")
 }
 
 func GetDB() []DB {
@@ -55,7 +55,7 @@ func GetDB() []DB {
 	defer db.Close()
 
 	var donnes []DB
-	rows, err := db.Query("SELECT id, prenom, nom, email, password, solde FROM user;")
+	rows, err := db.Query("SELECT id, prenom, nom, email, password, solde FROM users;")
 
 	if err != nil {
 		panic(err)
@@ -75,7 +75,7 @@ func GetDB() []DB {
 func InsertUser(prenom string, nom string, password string, email string) {
 	db := connect_DB()
 
-	query := `INSERT INTO users (prenom, nom, email, mdp) VALUES (?, ?, ?, ?);`
+	query := `INSERT INTO users (prenom, nom, email, password) VALUES (?, ?, ?, ?);`
 	_, err := db.Exec(query, prenom, nom, email, password)
 	if err != nil {
 		fmt.Println("Erreur lors de l'insertion :", err)

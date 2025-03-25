@@ -5,7 +5,10 @@ import (
 	"net/http"
 )
 
+var StockMessageErreurConnexion string
+
 type DataConnexion struct {
+	MessageErreur string
 }
 
 func ConnexionPage(w http.ResponseWriter, r *http.Request) {
@@ -21,7 +24,9 @@ func ConnexionPage(w http.ResponseWriter, r *http.Request) {
 func ConnexionGet(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("../Front/HTML/connexion.html"))
 
-	data := DataConnexion{}
+	data := DataConnexion{
+		MessageErreur: StockMessageErreurConnexion,
+	}
 	tmpl.Execute(w, data)
 }
 

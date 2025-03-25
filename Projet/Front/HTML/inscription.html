@@ -10,20 +10,18 @@
 </head>
 <body>
     <div class="container">
-        <h2 id="formTitle">Connexion</h2>
-        <form id="loginForm">
-            <form id="signupForm" style="display: none;">
-                <input type="text" id="newFirstName" placeholder="Prénom" required> 
-                <input type="text" id="newName" placeholder="Nom" required>
-                <input type="email" id="newEmail" placeholder="Email" required>
-                <input type="password" id="newPassword" placeholder="Mot de passe" required>
-                <button class="btn" value="Register" type="submit" >S'inscrire</button>
-                <a href="http://localhost:8080/Connexion">
-                    <p id="toggleForm" class="toggle">Déjà un compte ? Connectez-vous</p>
-                </a>
-            </form>
+        <h2 id="formTitle">Inscription</h2>
+        <form id="signupForm" method="POST" action="/Inscription">
+            <input name="prenom" type="text" id="newFirstName" placeholder="Prénom" required> 
+            <input name="nom" type="text" id="newName" placeholder="Nom" required>
+            <input name="email" type="email" id="newEmail" placeholder="Email" required>
+            <input name="mdp" type="password" id="newPassword" placeholder="Mot de passe" required>
+            <input class="btn" type="submit" value="S'inscrire">
+            <a href="http://localhost:8080/Connexion">
+                <p id="toggleForm" class="toggle">Déjà un compte ? Connectez-vous</p>
+            </a>
         </form>
-        <p id="message" style="color:red;"></p>
+        <p id="message" style="color:red;">{{.MessageErreur}}</p>
     </div>
 </body>
 </html>
