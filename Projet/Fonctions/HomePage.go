@@ -32,8 +32,8 @@ func HomePageGet(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var wine9 []Wine
+	rand.Seed(time.Now().UnixNano())
 	for i := 0; i < 9; i++ {
-		rand.Seed(time.Now().UnixNano()) // Initialisation avec le temps actuel pour éviter la répétition
 		nombre := rand.Intn(10000)
 
 		wine9 = append(wine9, wines[nombre])
