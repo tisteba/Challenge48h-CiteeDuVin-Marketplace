@@ -28,6 +28,53 @@
                 </ul>
             </div>
         </nav>
+        <!-- Bouton pour lancer le quiz -->
+<button id="quizButton" class="fixed bottom-4 right-4 bg-amber-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-amber-700">
+    Trouvez votre vin idéal
+</button>
+
+<!-- Modale du quiz -->
+<div id="quizModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold">Quiz - Trouvez votre vin idéal</h2>
+            <button id="closeQuiz" class="text-gray-500 hover:text-gray-700">
+                &times;
+            </button>
+        </div>
+        
+        <div id="quizContainer">
+            <!-- Les questions seront injectées ici -->
+        </div>
+        
+        <div class="flex justify-between mt-4">
+            <button id="prevQuestion" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hidden">Précédent</button>
+            <button id="nextQuestion" class="bg-amber-600 text-white px-4 py-2 rounded">Suivant</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modale des résultats -->
+<div id="resultsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-2xl">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold">Nos recommandations pour vous</h2>
+            <button id="closeResults" class="text-gray-500 hover:text-gray-700">
+                &times;
+            </button>
+        </div>
+        
+        <div id="recommendations" class="grid grid-cols-2 gap-4">
+            <!-- Les recommandations seront injectées ici -->
+        </div>
+        
+        <div class="mt-4 text-center">
+            <button id="restartQuiz" class="bg-amber-600 text-white px-4 py-2 rounded">
+                Refaire le quiz
+            </button>
+        </div>
+    </div>
+</div>
     </header>
 
     <main class="container mx-auto mt-8">
@@ -228,6 +275,242 @@
 
             // Tri initial par défaut (meilleures notes)
             sortSelect.dispatchEvent(new Event('change'));
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Éléments du DOM
+            const quizButton = document.getElementById('quizButton');
+            const quizModal = document.getElementById('quizModal');
+            const closeQuiz = document.getElementById('closeQuiz');
+            const quizContainer = document.getElementById('quizContainer');
+            const prevQuestion = document.getElementById('prevQuestion');
+            const nextQuestion = document.getElementById('nextQuestion');
+            const resultsModal = document.getElementById('resultsModal');
+            const closeResults = document.getElementById('closeResults');
+            const recommendations = document.getElementById('recommendations');
+            const restartQuiz = document.getElementById('restartQuiz');
+            
+            // Questions du quiz
+            const questions = [
+    {
+        question: "Quel type de vin préférez-vous ?",
+        key: "variety",
+        answers: [
+            { text: "Rouge corsé (Cabernet, Syrah)", value: ["Cabernet Sauvignon", "Rhône-style Red Blend"] },
+            { text: "Rouge léger (Pinot Noir)", value: ["Pinot Noir"] },
+            { text: "Blanc sec (Chardonnay, Sauvignon)", value: ["Chardonnay", "Sauvignon Blanc", "Rhône-style White Blend"] },
+            { text: "Rosé", value: ["Rosé"] }
+        ]
+    },
+    {
+        question: "Quel est votre budget approximatif ?",
+        key: "price",
+        answers: [
+            { text: "Moins de 30€", value: [0, 30] },
+            { text: "30€ à 60€", value: [30, 60] },
+            { text: "60€ à 100€", value: [60, 100] },
+            { text: "Plus de 100€", value: [100, 1000] }
+        ]
+    },
+    {
+        question: "Quelle région vous intéresse ?",
+        key: "country",
+        answers: [
+            { text: "France", value: ["France"] },
+            { text: "Italie", value: ["Italy"] }, 
+            { text: "Espagne", value: ["Spain"] },
+            { text: "États-Unis", value: ["US"] },
+            { text: "Autres pays", value: ["International"] }
+        ]
+    }
+];
+            
+            // Variables d'état
+            let currentQuestion = 0;
+            let answers = {};
+            let wineList = []; // Cette variable contiendra la liste des vins
+            
+            // Charger la liste des vins depuis les cartes existantes
+            function loadWineList() {
+                const cards = document.querySelectorAll('.wine-card');
+                wineList = Array.from(cards).map(card => ({
+                    element: card,
+                    points: parseInt(card.dataset.points),
+                    price: parseInt(card.dataset.price),
+                    variety: card.dataset.variety,
+                    country: card.dataset.country,
+                    description: card.querySelector('p.text-gray-600').textContent.toLowerCase(),
+                    winery: card.querySelector('h3').textContent
+                }));
+            }
+            
+            // Gestionnaires d'événements
+            quizButton.addEventListener('click', () => {
+                loadWineList();
+                currentQuestion = 0;
+                answers = {};
+                showQuestion();
+                quizModal.classList.remove('hidden');
+            });
+            
+            closeQuiz.addEventListener('click', () => {
+                quizModal.classList.add('hidden');
+            });
+            
+            closeResults.addEventListener('click', () => {
+                resultsModal.classList.add('hidden');
+            });
+            
+            restartQuiz.addEventListener('click', () => {
+                resultsModal.classList.add('hidden');
+                quizModal.classList.remove('hidden');
+                currentQuestion = 0;
+                answers = {};
+                showQuestion();
+            });
+            
+            prevQuestion.addEventListener('click', () => {
+                if (currentQuestion > 0) {
+                    currentQuestion--;
+                    showQuestion();
+                }
+            });
+            
+            nextQuestion.addEventListener('click', () => {
+                const selected = document.querySelector('input[name="quizAnswer"]:checked');
+                if (!selected) {
+                    alert("Veuillez sélectionner une réponse");
+                    return;
+                }
+                
+                // Enregistrer la réponse
+                const question = questions[currentQuestion];
+                answers[question.key] = JSON.parse(selected.value);
+                
+                // Passer à la question suivante ou afficher les résultats
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            });
+            
+            // Afficher la question actuelle
+            function showQuestion() {
+                const question = questions[currentQuestion];
+                
+                let html = `
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold mb-2">${question.question}</h3>
+                        <div class="space-y-2">
+                `;
+                
+                question.answers.forEach((answer, index) => {
+                    html += `
+                        <label class="flex items-center p-2 rounded hover:bg-gray-100">
+                            <input type="radio" name="quizAnswer" value='${JSON.stringify(answer.value)}' 
+                                   class="mr-2" ${index === 0 ? 'checked' : ''}>
+                            ${answer.text}
+                        </label>
+                    `;
+                });
+                
+                html += `</div></div>`;
+                quizContainer.innerHTML = html;
+                
+                // Gérer les boutons précédent/suivant
+                prevQuestion.classList.toggle('hidden', currentQuestion === 0);
+                nextQuestion.textContent = currentQuestion === questions.length - 1 ? 'Voir les résultats' : 'Suivant';
+            }
+            
+            // Afficher les résultats
+            // Remplacer la fonction showResults par cette version améliorée
+            function showResults() {
+    quizModal.classList.add('hidden');
+    resultsModal.classList.remove('hidden');
+    
+    // Debug: afficher les réponses et les premiers vins
+    console.log("Réponses du quiz:", answers);
+    console.log("Exemple de vin:", wineList[0]);
+    
+    const filteredWines = filterWines(wineList, answers);
+    filteredWines.sort((a, b) => b.points - a.points);
+    
+    let html = '';
+    const toShow = filteredWines.slice(0, 6);
+    
+    if (toShow.length === 0) {
+        html = '<p class="col-span-2 text-center py-4">Aucun vin exact ne correspond à vos critères. Voici nos suggestions élargies :</p>';
+        
+        // Fallback 1: Relâcher les contraintes une par une
+        const relaxedAnswers = {...answers};
+        delete relaxedAnswers.country;
+        const fallback1 = filterWines(wineList, relaxedAnswers);
+        
+        if (fallback1.length > 0) {
+            fallback1.sort((a, b) => b.points - a.points).slice(0, 6).forEach(wine => {
+                html += createWineCard(wine);
+            });
+        } else {
+            // Fallback 2: Afficher les meilleurs vins tout court
+            wineList.sort((a, b) => b.points - a.points).slice(0, 3).forEach(wine => {
+                html += createWineCard(wine);
+            });
+        }
+    } else {
+        toShow.forEach(wine => {
+            html += createWineCard(wine);
+        });
+    }
+    
+    recommendations.innerHTML = html;
+}
+
+function createWineCard(wine) {
+    return `
+        <div class="border rounded p-4">
+            <h3 class="font-bold">${wine.winery}</h3>
+            <p class="text-gray-600">${wine.variety} (${wine.country})</p>
+            <p class="text-amber-600 font-bold mt-2">${wine.price} €</p>
+            <p class="text-sm mt-1">Note: ${wine.points}/100</p>
+            <p class="text-xs mt-1 text-gray-500">${wine.description.substring(0, 60)}...</p>
+        </div>
+    `;
+}
+
+function filterWines(wines, answers) {
+    return wines.filter(wine => {
+        // Vérification du prix
+        if (answers.price) {
+            const [minPrice, maxPrice] = answers.price;
+            if (wine.price < minPrice || wine.price > maxPrice) return false;
+        }
+
+        // Vérification du pays
+        if (answers.country) {
+            if (answers.country.includes("International")) {
+                if (["France", "Italy", "Spain", "US"].includes(wine.country)) return false;
+            } else {
+                if (!answers.country.includes(wine.country)) return false;
+            }
+        }
+
+        // Vérification du cépage
+        if (answers.variety) {
+            const varietyMatch = answers.variety.some(variety => {
+                // Gestion spéciale pour les blends
+                if (variety === "Rhône-style Red Blend" && wine.variety.includes("Rhône")) return true;
+                if (variety === "Rhône-style White Blend" && wine.variety.includes("Rhône")) return true;
+                return wine.variety === variety;
+            });
+            if (!varietyMatch) return false;
+        }
+
+        return true;
+    });
+}
         });
     </script>
 </body>

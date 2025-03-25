@@ -6,6 +6,7 @@ import (
 )
 
 type DataFrance struct {
+	WineList []Wine
 }
 
 func VinsFrancePage(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +21,10 @@ func VinsFrancePage(w http.ResponseWriter, r *http.Request) {
 
 func VinsFranceGet(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("../Front/HTML/vinsfrance.html"))
-	data := DataFrance{}
+
+	data := DataFrance{
+		WineList: RecupWineContry("France"),
+	}
 	tmpl.Execute(w, data)
 }
 

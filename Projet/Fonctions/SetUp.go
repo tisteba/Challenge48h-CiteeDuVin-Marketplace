@@ -14,4 +14,6 @@ func SetHttp() {
 	http.HandleFunc("/VinsDeFrance", VinsFrancePage)
 	http.HandleFunc("/VinsDuMonde", VinsMondePage)
 	http.HandleFunc("/NosPepites", PepitesPage)
+	http.HandleFunc("/Quiz", QuizPage)
+	http.HandleFunc("/Connexion", ConnexionPage)
 }

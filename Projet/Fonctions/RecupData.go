@@ -2,8 +2,10 @@ package Fonctions
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
+	"sort"
 )
 
 // Wine représente la structure des données du fichier JSON
@@ -42,4 +44,28 @@ func LoadWines() ([]Wine, error) {
 	}
 
 	return wines, nil
+}
+
+func SortWinesByPoints(wines []Wine) {
+	sort.Slice(wines, func(i, j int) bool {
+		return wines[i].Points < wines[j].Points
+	})
+}
+
+func RecupWineContry(pays string) []Wine {
+	var WineContryFinal []Wine
+
+	wines, err := LoadWines()
+	if err != nil {
+		fmt.Println("Erreur lors du chargement du fichier JSON :", err)
+		return WineContryFinal
+	}
+
+	for _, wine := range wines {
+		if wine.Country == pays {
+			WineContryFinal = append(WineContryFinal, wine)
+		}
+	}
+
+	return WineContryFinal
 }
