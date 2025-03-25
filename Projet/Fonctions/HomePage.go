@@ -39,3 +39,7 @@ func HomePagePost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
 	fmt.Println("")
 }
+
+func RedirectBasePage(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
+}

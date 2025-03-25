@@ -38,7 +38,3 @@ func EnsembleVinsGet(w http.ResponseWriter, r *http.Request) {
 func EnsembleVinsPost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/TousTousLesVins", http.StatusSeeOther)
 }
-
-func RedirectBasePage(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/TousLesVins", http.StatusSeeOther)
-}
