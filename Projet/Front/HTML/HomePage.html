@@ -12,11 +12,11 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <header class="bg-white shadow-md">
+    <header class="bg-[#1A232D] shadow-md">
         <nav class="container mx-auto flex justify-between items-center p-4">
             <div class="flex items-center">
                 <img src="/api/placeholder/100/50" alt="Logo" class="h-10 mr-4">
-                <ul class="flex space-x-6 text-gray-700">
+                <ul class="flex space-x-6 text-white">
                     <li><a href="http://localhost:8080/TousLesVins" class="hover:text-amber-600">Tous nos Vins</a></li>
                     <li><a href="http://localhost:8080/VinsDeFrance" class="hover:text-amber-600">Vins de France</a></li>
                     <li><a href="#" class="hover:text-amber-600">Vins du Monde</a></li>
@@ -25,16 +25,14 @@
                 </ul>
             </div>
             <div class="flex items-center space-x-4">
-                <input type="text" placeholder="Rechercher" class="border rounded-full px-4 py-2">
-                <button class="bg-amber-500 text-white px-4 py-2 rounded-full">Se Connecter</button>
+                <input type="text" placeholder="Rechercher" class="border rounded-full px-4 py-2 bg-[#FCF5F4] text-gray-900">
+                <button class="bg-[#AF2240] text-white px-4 py-2 rounded-full hover:bg-[#DA4B66]">Se Connecter</button>
             </div>
         </nav>
     </header>
 
     <main class="container mx-auto mt-8">
         <div class="flex">
-
-            <!-- Produits -->
             <section class="w-3/4">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold">Vins du Monde</h1>
@@ -49,23 +47,21 @@
                 </div>
 
                 <div class="grid grid-cols-3 gap-6">
-
                     {{range .WineList}}
                         <div class="relative bg-white rounded-lg shadow-md p-4 text-center">
                             <p style="position: absolute;left:5px;top:5px;">{{.Points}}</p>
                             <h3 class="font-semibold">{{.Winery}}</h3>
                             <p class="text-gray-600">{{.Variety}}</p>
                             <div class="flex justify-between items-center mt-4">
-                                <span class="font-bold text-amber-600">{{.Price}} €</span>
-                                <button class="bg-green-500 text-white px-4 py-2 rounded-full">Ajouter</button>
+                                <span class="font-bold text-[#DA4B66]">{{.Price}} €</span>
+                                <button class="bg-[#AF2240] text-white px-4 py-2 rounded-full hover:bg-[#DA4B66]">Ajouter</button>
                             </div>
                         </div>
                     {{end}}
-
                 </div>
 
                 <div class="flex justify-center mt-8">
-                    <button class="bg-amber-500 text-white px-6 py-2 rounded-full">Charger plus</button>
+                    <button class="bg-[#AF2240] text-white px-6 py-2 rounded-full hover:bg-[#DA4B66]">Charger plus</button>
                 </div>
             </section>
         </div>
