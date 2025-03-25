@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quiz sur les vins</title>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h2>Quiz sur les vins</h2>
+        <p id="question">Chargement...</p>
+        <p id="score">Score : 0/10</p>
+        <div class="btn-container" id="btn-container"></div>
+    </div>
+
+    <script>
+        const questions = [
+            "Quel cépage est utilisé pour le vin Caymus 1998 de la Napa Valley ?",
+            "Quel pays produit le vin M. Chapoutier 1999 Le Méal Ermitage ?",
+            "Quel est le prix du vin Colgin 1999 Herb Lamb Vineyard Cabernet Sauvignon ?",
+            "Quel est le nom du critique qui a dégusté le vin E. Guigal 1998 La Mouline ?",
+            "Quel est le vin ayant obtenu le plus haut score dans les données disponibles ?",
+            "Quelle est la variété du vin Domaine Jean-Michel Gerin 1999 La Landonne ?",
+            "Quel vin a une description mentionnant des arômes de 'crème brûlée' ?",
+            "Quelle région produit le vin Quilceda Creek 1998 Cabernet Sauvignon ?",
+            "Quelle est la caractéristique mentionnée dans la description du vin Pride Mountain 1999 Merlot ?",
+            "Quel vin est décrit comme ayant un potentiel de vieillissement de '10 ou 15 ans' avant d’atteindre son apogée ?"
+        ];
+
+        const answerOptions = [
+            ["Merlot", "Cabernet Sauvignon", "Pinot Noir", "Syrah"],
+            ["Italie", "États-Unis", "France", "Espagne"],
+            ["120$", "150$", "100$", "70$"],
+            ["Roger Voss", "Paul Gregutt", "Michael Schachner", "Virginie Boone"],
+            ["J.L. Chave 1999 Hermitage", "M. Chapoutier 1999 Le Méal Ermitage", "E. Guigal 1998 La Mouline", "Dalla Valle 1999 Maya Red"],
+            ["Pinot Noir", "Syrah", "Rhône-style Red Blend", "Merlot"],
+            ["Hartenberg 2007 The Stork Shiraz", "Boekenhoutskloof 2008 The Chocolate Block Red", "Château Fonréaud 2006 Listrac-Médoc", "Paul Jaboulet Aîné 1999 La Chapelle"],
+            ["Bordeaux", "Napa Valley", "Columbia Valley (WA)", "Rhône Valley"],
+            ["Saveurs de prune et de cerise", "Notes de miel et de citron", "Une texture légèrement amère", "Une finale saline"],
+            ["E. Guigal 1999 Hermitage", "Dry River 2009 Late Harvest Riesling", "Quilceda Creek 1998 Cabernet Sauvignon", "Errazuriz 2008 The Blend Limited Edition"]
+        ];
+
+        const correctAnswers = [
+            "Cabernet Sauvignon",
+            "France",
+            "150$",
+            "Roger Voss",
+            "M. Chapoutier 1999 Le Méal Ermitage",
+            "Rhône-style Red Blend",
+            "Hartenberg 2007 The Stork Shiraz",
+            "Columbia Valley (WA)",
+            "Saveurs de prune et de cerise",
+            "E. Guigal 1999 Hermitage"
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function checkAnswer(selectedAnswer) {
+            if (selectedAnswer === correctAnswers[currentQuestion]) {
+                score++;
+                alert("Bonne réponse !");
+            } else {
+                alert("Mauvaise réponse. La réponse correcte est : " + correctAnswers[currentQuestion]);
+            }
+            currentQuestion++;
+            document.getElementById("score").textContent = `Score : ${score}/10`;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                document.getElementById("question").textContent = "Quiz terminé !";
+                document.getElementById("btn-container").innerHTML = "";
+            }
+        }
+
+        function showQuestion() {
+            document.getElementById("question").textContent = `Question ${currentQuestion + 1} : ${questions[currentQuestion]}`;
+            updateButtons(answerOptions[currentQuestion]);
+        }
+
+        function updateButtons(options) {
+            const buttonContainer = document.getElementById("btn-container");
+            buttonContainer.innerHTML = '';
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'btn';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                buttonContainer.appendChild(button);
+            });
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>

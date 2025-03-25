@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion</title>
+
+        <title>Connexion & Inscription</title>
+        <style>
+            body {
+                font-family: 'Helvetica Neue', sans-serif;
+                background-color: #f2f2f2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-image: url(image/vin.jpg);
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+            }
+    
+            .container {
+                background-color: #fff;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                padding: 40px;
+                text-align: center;
+                max-width: 400px;
+            }
+    
+            h2 {
+                color: #8B0000;
+                font-size: 24px;
+            }
+    
+            input {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+    
+            .btn {
+                background-color: #8B0000;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                width: 100%;
+            }
+    
+            .btn:hover {
+                background-color: #5A0000;
+            }
+    
+            .toggle {
+                color: #8B0000;
+                cursor: pointer;
+                margin-top: 10px;
+                display: block;
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <h2 id="formTitle">Connexion</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Mot de passe" required>
+            <button type="button" class="btn" onclick="login()">Se connecter</button>
+            <p id="toggleForm" class="toggle" onclick="toggleForm()">Pas encore inscrit ? Créez un compte</p>
+        </form>
+        
+        <form id="signupForm" style="display: none;">
+            <input type="text" id="newName" placeholder="Nom" required>
+            <input type="email" id="newEmail" placeholder="Email" required>
+            <input type="password" id="newPassword" placeholder="Mot de passe" required>
+            <button type="button" class="btn" onclick="signup()">S'inscrire</button>
+            <p id="toggleForm" class="toggle" onclick="toggleForm()">Déjà un compte ? Connectez-vous</p>
+        </form>
+        <p id="message" style="color:red;"></p>
+    </div>
+
+    <script>
+        function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            if (email === "admin@vin.com" && password === "vin123") {
+                window.location.href = "quiz.html";
+            } else {
+                document.getElementById("message").textContent = "Email ou mot de passe incorrect";
+            }
+        }
+
+        function signup() {
+            const name = document.getElementById("newName").value;
+            const email = document.getElementById("newEmail").value;
+            const password = document.getElementById("newPassword").value;
+            if (name && email && password) {
+                alert("Compte créé avec succès ! Vous pouvez maintenant vous connecter.");
+                toggleForm();
+            } else {
+                document.getElementById("message").textContent = "Veuillez remplir tous les champs.";
+            }
+        }
+
+        function toggleForm() {
+            const loginForm = document.getElementById("loginForm");
+            const signupForm = document.getElementById("signupForm");
+            const formTitle = document.getElementById("formTitle");
+
+            if (loginForm.style.display === "none") {
+                loginForm.style.display = "block";
+                signupForm.style.display = "none";
+                formTitle.textContent = "Connexion";
+            } else {
+                loginForm.style.display = "none";
+                signupForm.style.display = "block";
+                formTitle.textContent = "Inscription";
+            }
+        }
+    </script>
+</body>
+</html>
