@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../CSS/HomePage.css" rel="stylesheet" />
+    <link href="../CSS/homepage.css" rel="stylesheet" />
     <title>Document</title>
 </head>
 <body>
-    coucou
+    <h1>Liste des Vins</h1>
+    <div class="wine-container">
+        {{range .WineList}}
+        <div class="wine-card">
+            <div class="wine-title">{{.Title}}</div>
+            <div class="wine-info">Points: {{.Points}} | Prix: {{.Price}}$</div>
+            <div class="wine-info">Cépage: {{.Variety}}</div>
+            <div class="wine-info">Région: {{if .Region1}}{{.Region1}}, {{end}}{{.Country}}</div>
+            <p>{{.Description}}</p>
+        </div>
+        {{end}}
+    </div>
 </body>
 </html>

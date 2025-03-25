@@ -7,6 +7,7 @@ import (
 )
 
 type DataHome struct {
+	WineList []Wine
 }
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +23,15 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 func HomePageGet(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("../Front/HTML/homepage.html"))
 
-	data := DataHome{}
+	wines, err := LoadWines()
+	if err != nil {
+		fmt.Println("Erreur lors du chargement du fichier JSON :", err)
+		return
+	}
+
+	data := DataHome{
+		WineList: wines,
+	}
 	tmpl.Execute(w, data)
 }
 
