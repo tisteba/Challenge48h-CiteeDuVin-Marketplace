@@ -72,6 +72,241 @@
             </div>
         </div>
     </header>
+
+    <div class="calendar-container">
+        <header class="calendar-header">
+            <h1>{{.MonthName}} {{.Year}}</h1>
+            <div class="nav-buttons">
+                <a href="/?year={{.PrevYear}}&month={{.PrevMonth}}" class="nav-button">&lt; Précédent</a>
+                <a href="/?year={{.Now.Year}}&month={{.Now.Month}}" class="nav-button">Aujourd'hui</a>
+                <a href="/?year={{.NextYear}}&month={{.NextMonth}}" class="nav-button">Suivant &gt;</a>
+            </div>
+        </header>
+        
+        <div class="weekdays">
+            <div>Dim</div>
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mer</div>
+            <div>Jeu</div>
+            <div>Ven</div>
+            <div>Sam</div>
+        </div>
+        
+        <div class="days-grid">
+            {{range .Days}}
+            <div class="day {{if not .IsCurrent}}other-month{{end}} {{if .IsToday}}today{{end}}" data-date="{{.Date.Format "2006-01-02"}}">
+                <div class="day-number">{{.Date.Day}}</div>
+                {{if .IsCurrent}}
+                {{$dateStr := .Date.Format "2006-01-02"}}
+                <button class="book-btn" onclick="showBookingModal('{{$dateStr}}')">+</button>
+                {{end}}
+            </div>
+            {{end}}
+        </div>
+    </div>
+    
+    <!-- Modal de réservation -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Prendre un rendez-vous</h2>
+            <form id="bookingForm" action="/book" method="POST">
+                <input type="hidden" id="appointmentDate" name="date">
+                
+                <div class="form-group">
+                    <label for="time">Heure:</label>
+                    <select id="time" name="time" required>
+                        {{range .TimeSlots}}
+                        <option value="{{.}}">{{.}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Nom:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Type de rendez-vous:</label>
+                    <select id="type" name="type" required>
+                        <option value="Visio">Visio</option>
+                        <option value="Sur site">Sur site</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">Réserver</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="appointments-container">
+        <h2>Mes Rendez-vous</h2>
+        <div id="appointmentsList"></div>
+    </div>
+
+    <script>
+    // Charger les rendez-vous depuis le localStorage
+    let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+
+    function showBookingModal(date) {
+        document.getElementById('appointmentDate').value = date;
+        document.getElementById('bookingModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('bookingModal').style.display = 'none';
+    }
+
+    // Gestion du formulaire
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            date: document.getElementById('appointmentDate').value,
+            time: document.getElementById('time').value,
+            type: document.getElementById('type').value,
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            confirmed: false
+        };
+        
+        // Ajouter le nouveau rendez-vous
+        appointments.push(formData);
+        
+        // Sauvegarder dans le localStorage
+        localStorage.setItem('appointments', JSON.stringify(appointments));
+        
+        // Fermer la modal et recharger
+        closeModal();
+        alert('Rendez-vous enregistré avec succès!');
+        window.location.reload();
+    });
+
+    // Fermer la modal si on clique en dehors
+    window.onclick = function(event) {
+        const modal = document.getElementById('bookingModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+
+    // Marquer les cases avec rendez-vous
+    function markAppointments() {
+        const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+        appointments.forEach(app => {
+            const dayElement = document.querySelector(`.day[data-date="${app.date}"]`);
+            if (dayElement) {
+                dayElement.classList.add('has-appointment');
+                
+                const indicator = document.createElement('div');
+                indicator.className = 'appointment-type-indicator';
+                indicator.textContent = app.type === 'Visio' ? 'V' : 'S';
+                indicator.title = `Rendez-vous ${app.type}`;
+                
+                // Stocker les données du rendez-vous dans l'indicateur
+                indicator.dataset.appointment = JSON.stringify(app);
+                
+                // Ajouter l'événement click
+                indicator.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    showAppointmentDetails(this.dataset.appointment);
+                });
+                
+                dayElement.appendChild(indicator);
+            }
+        });
+    }
+
+    // Nouvelle fonction pour afficher les détails
+    function showAppointmentDetails(appointmentData) {
+        const app = JSON.parse(appointmentData);
+        const modal = document.createElement('div');
+        modal.className = 'details-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-btn" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                <h2>Détails du rendez-vous</h2>
+                <div class="appointment-details">
+                    <p><strong>Date:</strong> ${app.date}</p>
+                    <p><strong>Heure:</strong> ${app.time}</p>
+                    <p><strong>Type:</strong> ${app.type}</p>
+                    <p><strong>Nom:</strong> ${app.name}</p>
+                    <p><strong>Email:</strong> ${app.email}</p>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    // Au chargement de la page
+    window.onload = function() {
+        markAppointments();
+    };
+
+    // Afficher les rendez-vous dans la console (optionnel)
+    function logAppointments() {
+        console.log("Rendez-vous enregistrés:");
+        console.log(appointments);
+    }
+
+    // Appeler cette fonction si besoin
+    // logAppointments();
+
+    // Fonction pour afficher les rendez-vous
+    function displayAppointments() {
+        const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+        const appointmentsList = document.getElementById('appointmentsList');
+        
+        if (appointmentsList) {
+            appointmentsList.innerHTML = '';
+            
+            appointments.forEach((app, index) => {
+                const appElement = document.createElement('div');
+                appElement.className = 'appointment-item';
+                appElement.innerHTML = `
+                    <p><strong>Date:</strong> ${app.date} à ${app.time}</p>
+                    <p><strong>Type:</strong> ${app.type}</p>
+                    <p><strong>Nom:</strong> ${app.name}</p>
+                    <p><strong>Email:</strong> ${app.email}</p>
+                    <button onclick="deleteAppointment(${index})">Supprimer</button>
+                    <hr>
+                `;
+                appointmentsList.appendChild(appElement);
+            });
+        }
+    }
+
+    // Fonction pour supprimer un rendez-vous
+    function deleteAppointment(index) {
+        const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+        appointments.splice(index, 1);
+        localStorage.setItem('appointments', JSON.stringify(appointments));
+        displayAppointments();
+        window.location.reload();
+    }
+
+    // Au chargement de la page
+    window.onload = function() {
+        markAppointments();
+        displayAppointments();
+    };
+    </script>
+
+    <script>
+        // Fermer la modal si on clique en dehors
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('details-modal')) {
+                e.target.remove();
+            }
+        });
+    </script>
     
     <footer class="footer">
         <div class="footer-container">
