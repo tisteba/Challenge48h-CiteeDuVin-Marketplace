@@ -3,11 +3,14 @@ package Fonctions
 import (
 	"fmt"
 	"html/template"
+	db "marketplace/DataBase"
 	"net/http"
 )
 
 type DataPepites struct {
-	WineList []Wine
+	WineList  []Wine
+	IsConnect bool
+	User      db.DB
 }
 
 func PepitesPage(w http.ResponseWriter, r *http.Request) {
@@ -36,8 +39,16 @@ func PepitesPageGet(w http.ResponseWriter, r *http.Request) {
 		wine12 = append(wine12, wines[i])
 	}
 
+	cookie, err := r.Cookie("user_id")
+	if err != nil {
+		http.Redirect(w, r, "/Authentication", http.StatusSeeOther)
+		return
+	}
+
 	data := DataPepites{
-		WineList: wine12,
+		WineList:  wine12,
+		IsConnect: IsConnectStock,
+		User:      db.GetUser(cookie.Value),
 	}
 	tmpl.Execute(w, data)
 }

@@ -3,11 +3,14 @@ package Fonctions
 import (
 	"fmt"
 	"html/template"
+	db "marketplace/DataBase"
 	"net/http"
 )
 
 type DataEnsemble struct {
-	WineList []Wine
+	WineList  []Wine
+	IsConnect bool
+	User      db.DB
 }
 
 func EnsembleVinsPage(w http.ResponseWriter, r *http.Request) {
@@ -29,8 +32,16 @@ func EnsembleVinsGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	cookie, err := r.Cookie("user_id")
+	if err != nil {
+		http.Redirect(w, r, "/Authentication", http.StatusSeeOther)
+		return
+	}
+
 	data := DataEnsemble{
-		WineList: wines,
+		WineList:  wines,
+		IsConnect: true,
+		User:      db.GetUser(cookie.Value),
 	}
 	tmpl.Execute(w, data)
 }
