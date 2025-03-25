@@ -24,15 +24,51 @@
                     <li><a href="#" class="hover:text-amber-600">Promotions</a></li>
                 </ul>
             </div>
-            <div class="flex items-center space-x-4">
-                <input type="text" placeholder="Rechercher" class="border rounded-full px-4 py-2">
-                <button class="bg-amber-500 text-white px-4 py-2 rounded-full">Se Connecter</button>
-            </div>
         </nav>
     </header>
 
     <main class="container mx-auto mt-8">
         <div class="flex">
+            <!-- Filtres -->
+            <aside class="w-1/4 pr-8">
+                <h2 class="text-xl font-bold mb-4">Filtres</h2>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="font-semibold mb-2">Prix</h3>
+                    <input type="range" min="8" max="260" class="w-full">
+                    <div class="flex justify-between text-sm text-gray-600">
+                        <span>8€</span>
+                        <span>260€</span>
+                    </div>
+
+                    <h3 class="font-semibold mt-4 mb-2">Type de Vin</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            Blanc (78)
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            Rouge (45)
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            Rosé (22)
+                        </label>
+                    </div>
+
+                    <h3 class="font-semibold mt-4 mb-2">Origine</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            France (120)
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            International (89)
+                        </label>
+                    </div>
+                </div>
+            </aside>
 
             <!-- Produits -->
             <section class="w-3/4">

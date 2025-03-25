@@ -10,4 +10,5 @@ func SetHttp() {
 
 	http.HandleFunc("/", RedirectBasePage)
 	http.HandleFunc("/HomePage", HomePage)
+	http.HandleFunc("/TousLesVins", EnsembleVins)
 }
