@@ -11,16 +11,16 @@
 <body>
     <div class="container">
         <h2 id="formTitle">Connexion</h2>
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Mot de passe" required>
-            <button value="Register" type="submit" class="btn">Se connecter</button>
+        <form id="loginForm" method="POST" action="/Connexion">
+            <input name="email" type="email" id="email" placeholder="Email" required>
+            <input name="password" type="password" id="password" placeholder="Mot de passe" required>
+            <button type="submit" class="btn">Se connecter</button>
             <a href="http://localhost:8080/Inscription">
                 <p id="toggleForm" class="toggle">Pas encore inscrit ? Créez un compte</p>
             </a>
         </form>
     
-        <p id="message" style="color:red;"></p>
+        <p id="message" style="color:red;">{{.MessageErreur}}</p>
     </div>
 </body>
 </html>

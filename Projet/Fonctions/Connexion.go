@@ -1,8 +1,12 @@
 package Fonctions
 
 import (
+	"fmt"
 	"html/template"
+	db "marketplace/DataBase"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 var StockMessageErreurConnexion string
@@ -27,9 +31,37 @@ func ConnexionGet(w http.ResponseWriter, r *http.Request) {
 	data := DataConnexion{
 		MessageErreur: StockMessageErreurConnexion,
 	}
+
+	StockMessageErreurConnexion = ""
 	tmpl.Execute(w, data)
 }
 
 func ConnexionPost(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		fmt.Printf("Erreur ParseForm() : %v\n", err)
+		http.Error(w, "Erreur lors de l'analyse du formulaire", http.StatusBadRequest)
+		return
+	}
+
+	email := r.Form.Get("email")
+	mdp := r.Form.Get("password")
+
+	tabUser := db.GetDB()
+
+	for _, user := range tabUser {
+		if user.Email == email && user.Mdp == mdp {
+			cookie := http.Cookie{
+				Name:     "user_id",
+				Value:    strconv.Itoa(user.ID),
+				Expires:  time.Now().Add(24 * time.Hour),
+				HttpOnly: true,
+			}
+			http.SetCookie(w, &cookie)
+			http.Redirect(w, r, "/HomePage", http.StatusSeeOther)
+			return
+		}
+	}
+	StockMessageErreurConnexion = "Identifiants incorrects"
+
 	http.Redirect(w, r, "/Connexion", http.StatusSeeOther)
 }
