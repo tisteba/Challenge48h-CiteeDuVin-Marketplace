@@ -1,6 +1,8 @@
 package Fonctions
 
 import (
+	"fmt"
+	db "marketplace/DataBase"
 	"net/http"
 )
 
@@ -16,4 +18,12 @@ func SetHttp() {
 	http.HandleFunc("/NosPepites", PepitesPage)
 	http.HandleFunc("/Quiz", QuizPage)
 	http.HandleFunc("/Connexion", ConnexionPage)
+	http.HandleFunc("/Inscription", InscriptionPage)
+
+	SetDB()
+}
+
+func SetDB() {
+	db.CreateTableUsers()
+	fmt.Println("")
 }

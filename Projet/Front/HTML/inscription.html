@@ -12,14 +12,17 @@
     <div class="container">
         <h2 id="formTitle">Connexion</h2>
         <form id="loginForm">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Mot de passe" required>
-            <button value="Register" type="submit" class="btn">Se connecter</button>
-            <a href="http://localhost:8080/Inscription">
-                <p id="toggleForm" class="toggle">Pas encore inscrit ? Créez un compte</p>
-            </a>
+            <form id="signupForm" style="display: none;">
+                <input type="text" id="newFirstName" placeholder="Prénom" required> 
+                <input type="text" id="newName" placeholder="Nom" required>
+                <input type="email" id="newEmail" placeholder="Email" required>
+                <input type="password" id="newPassword" placeholder="Mot de passe" required>
+                <button class="btn" value="Register" type="submit" >S'inscrire</button>
+                <a href="http://localhost:8080/Connexion">
+                    <p id="toggleForm" class="toggle">Déjà un compte ? Connectez-vous</p>
+                </a>
+            </form>
         </form>
-    
         <p id="message" style="color:red;"></p>
     </div>
 </body>
