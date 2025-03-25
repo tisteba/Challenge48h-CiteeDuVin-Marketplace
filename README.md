@@ -1,7 +1,5 @@
 # Cave des Vins - Plateforme Vinicole Bordeaux
 
-![Logo Cité du Vin](https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg)
-
 ## Membres :
 - Baptiste Renou
 - Dulou Adrien
