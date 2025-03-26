@@ -11,6 +11,8 @@ var StockMessageErreurInscription string
 
 type DataInscrition struct {
 	MessageErreur string
+	IsConnect     bool
+	User          db.DB
 }
 
 func InscriptionPage(w http.ResponseWriter, r *http.Request) {
@@ -26,8 +28,16 @@ func InscriptionPage(w http.ResponseWriter, r *http.Request) {
 func InscriptionGet(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("../Front/HTML/inscription.html"))
 
-	data := DataConnexion{
+	cookie, err := r.Cookie("user_id")
+	if err != nil {
+		http.Redirect(w, r, "/Connexion", http.StatusSeeOther)
+		return
+	}
+
+	data := DataInscrition{
 		MessageErreur: StockMessageErreurInscription,
+		IsConnect:     IsConnectStock,
+		User:          db.GetUser(cookie.Value),
 	}
 
 	StockMessageErreurInscription = ""
