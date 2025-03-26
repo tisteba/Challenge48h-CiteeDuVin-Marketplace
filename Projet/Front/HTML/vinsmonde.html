@@ -111,8 +111,13 @@
                             <h3 class="wine-winery">{{.Winery}}</h3>
                             <p class="wine-variety">{{.Variety}}</p>
                             <div class="wine-footer">
-                                <span class="wine-price">{{.Price}} €</span>
-                                <button class="add-button">Ajouter</button>
+                                {{if eq .Price 0}}
+                                    <span class="wine-price">Enchères</span>
+                                    <button class="add-button">Enchérir</button>
+                                {{else}}
+                                    <span class="wine-price">{{.Price}} €</span>
+                                    <button class="add-button">Ajouter</button>
+                                {{end}}
                             </div>
                         </div>
                     {{end}}
