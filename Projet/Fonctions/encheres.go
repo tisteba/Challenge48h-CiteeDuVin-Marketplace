@@ -40,7 +40,7 @@ func EncheresGet(w http.ResponseWriter, r *http.Request) {
 
 	var Instance []Wine
 	for _, wine := range wines {
-		if wine.Points == 0 {
+		if wine.Price == 0 {
 			Instance = append(Instance, wine)
 		}
 	}
