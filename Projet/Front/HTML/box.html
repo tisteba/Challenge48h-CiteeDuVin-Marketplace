@@ -1,61 +1,173 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Même head que ensemble.html -->
+    <meta charset="UTF-8">
     <title>Cave des Vins - Box Mystère</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://www.theatreponttournant.com/wp-content/uploads/2019/07/cit%C3%A9-du-vin-logo.jpg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/pepites.css">
 </head>
-<body class="bg-gray-50">
-    <header class="bg-white shadow-md">
-        <!-- Reprenez le même header que ensemble.html -->
-    </header>
-
-    <main class="container mx-auto py-8">
-        <section class="text-center mb-12">
-            <h1 class="text-3xl font-bold text-amber-700">🎁 Box Mystère</h1>
-            <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
-                Laissez-nous vous surprendre avec une sélection exclusive de vins soigneusement choisis par notre algorithme 🤓.
-                <br>Qualité garantie (tous nos vins ont 85+ points).
-            </p>
-        </section>
-
-        <div class="grid md:grid-cols-2 gap-8">
-            <!-- Box 1 -->
-            <div class="bg-white p-6 rounded-lg shadow-md border border-amber-200">
-                <h2 class="text-xl font-bold mb-2">Box Découverte <span class="text-amber-600">(30€)</span></h2>
-                <p class="mb-4">2 bouteilles mystères - Parfait pour commencer</p>
-                <button 
-                    onclick="selectBox(30, 2)" 
-                    class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 rounded">
-                    Je tente l'aventure !
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <!-- Logo - always visible, aligned left -->
+            <div class="logo-container">
+                <a href="http://localhost:8080/" class="nav-link">
+                <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="logo">
+                </a>
+            </div>
+            
+            <!-- Mobile menu button - visible only on mobile -->
+            <button id="mobile-menu-toggle" class="mobile-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+    
+            <!-- Desktop navigation - hidden on mobile -->
+            <ul class="desktop-nav">
+                <li><a href="http://localhost:8080/TousLesVins" class="nav-link">Tous nos Vins</a></li>
+                <li><a href="http://localhost:8080/VinsDeFrance" class="nav-link">Vins de France</a></li>
+                <li><a href="http://localhost:8080/VinsDuMonde" class="nav-link">Vins du Monde</a></li>
+                <li><a href="http://localhost:8080/NosPepites" class="nav-link">Nos Pépites</a></li>
+                <li><a href="http://localhost:8080/Encheres" class="nav-link">Nos Enchères</a></li>
+                <li><a href="http://localhost:8080/Quiz" class="nav-link">Quiz</a></li>
+            </ul>
+            
+            <!-- Desktop search and login - hidden on mobile -->
+            <div class="desktop-search">
+                <input type="text" placeholder="Rechercher" class="search-input">
+                {{if .IsConnect}}
+                    <p class="mobile-nav-link">{{.User.Prenom}}</p>
+                {{else}}
+                    <a href="http://localhost:8080/Connexion">
+                    <button class="login-button">Se Connecter</button>
+                    </a>
+                {{end}}           
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="mobile-menu-overlay">
+            <div class="mobile-menu-header">
+                <a href="http://localhost:8080/" class="nav-link">
+                <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="mobile-logo">
+                </a>
+                <button id="mobile-menu-close" class="mobile-menu-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                 </button>
             </div>
-
-            <!-- Box 2 -->
-            <div class="bg-white p-6 rounded-lg shadow-md border border-amber-200">
-                <h2 class="text-xl font-bold mb-2">Box Connoisseur <span class="text-amber-600">(60€)</span></h2>
-                <p class="mb-4">3 bouteilles premium - Pour les amateurs éclairés</p>
-                <button 
-                    onclick="selectBox(60, 3)" 
-                    class="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 rounded">
-                    Je veux la qualité !
-                </button>
+            <div class="mobile-menu-content">
+                <input type="text" placeholder="Rechercher" class="mobile-search-input">
+                {{if .IsConnect}}
+                    <p class="mobile-nav-link">{{.User.Prenom}}</p>
+                {{else}}
+                    <a href="http://localhost:8080/Connexion">
+                    <button class="login-button">Se Connecter</button>
+                    </a>
+                {{end}}
+                <ul class="mobile-nav">
+                    <li><a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">Tous nos Vins</a></li>
+                    <li><a href="http://localhost:8080/VinsDeFrance" class="mobile-nav-link">Vins de France</a></li>
+                    <li><a href="http://localhost:8080/VinsDuMonde" class="mobile-nav-link">Vins du Monde</a></li>
+                    <li><a href="http://localhost:8080/NosPepites" class="mobile-nav-link">Nos Pépites</a></li>
+                    <li><a href="http://localhost:8080/Encheres" class="nav-link">Nos Enchères</a></li>
+                    <li><a href="http://localhost:8080/Quiz" class="mobile-nav-link">Quiz</a></li>
+                </ul>
             </div>
         </div>
+    </header>
 
-        <!-- Résultats chargés ici -->
-        <div id="boxResults" class="mt-12 hidden">
-            <h2 class="text-2xl font-bold mb-6">Votre sélection mystère :</h2>
-            <div id="selectedWines" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-            <button 
-                onclick="confirmOrder()" 
-                class="mt-8 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg">
-                Confirmer ma commande
-            </button>
+    <main class="main-container">
+        <div class="main-content">
+            <section class="box-section">
+                <div class="section-header">
+                    <h1 class="section-title">🎁 Kit de démarage</h1>
+                </div>
+
+                <br>
+
+                <div class="box-grid">
+                    <!-- Box 1 -->
+                    <div class="box-card">
+                        <h2 class="box-title">Box Découverte <span class="box-price">(30€)</span></h2>
+                        <p class="box-details">2 bouteilles mystères - Parfait pour commencer</p>
+                        <button onclick="selectBox(30, 2)" class="box-button box-button-discovery">
+                            Je tente l'aventure !
+                        </button>
+                    </div>
+
+                    <!-- Box 2 -->
+                    <div class="box-card">
+                        <h2 class="box-title">Box Connoisseur <span class="box-price">(60€)</span></h2>
+                        <p class="box-details">3 bouteilles premium - Pour les amateurs éclairés</p>
+                        <button onclick="selectBox(60, 3)" class="box-button box-button-connoisseur">
+                            Je veux la qualité !
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Résultats chargés ici -->
+                <div id="boxResults" class="box-results hidden">
+                    <h2 class="section-title">Votre sélection mystère :</h2>
+                    <div id="selectedWines" class="wine-grid"></div>
+                    <button onclick="confirmOrder()" class="confirm-button">
+                        Confirmer ma commande
+                    </button>
+                </div>
+            </section>
         </div>
     </main>
 
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4 class="footer-title">Nos Vins</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Vins de France</a></li>
+                    <li><a href="#" class="footer-link">Vins Internationaux</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Livraison</a></li>
+                    <li><a href="#" class="footer-link">Conseil</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">À Propos</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Notre Histoire</a></li>
+                    <li><a href="#" class="footer-link">Nos Vignerons</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Nous Contacter</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    
     <script>
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+    
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.style.display = 'block';
+        });
+    
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.style.display = 'none';
+        });
+
         async function selectBox(budget, bottleCount) {
             const response = await fetch(`/api/lootbox?budget=${budget}&count=${bottleCount}`);
             const wines = await response.json();
@@ -63,13 +175,15 @@
             let html = '';
             wines.forEach(wine => {
                 html += `
-    <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-bold">${wine.winery || 'Domaine inconnu'}</h3>
-        <p class="text-gray-600">${wine.variety || 'Non spécifié'}</p>
-        <p class="text-amber-600 font-bold">${wine.price ? wine.price + '€' : 'Prix inconnu'}</p>
-        <p class="text-sm">Note: ${wine.points || '?'}/100</p>
-    </div>
-`;
+                    <div class="wine-card">
+                        <p class="wine-points">${wine.points || '?'}</p>
+                        <h3 class="wine-winery">${wine.winery || 'Domaine inconnu'}</h3>
+                        <p class="wine-variety">${wine.variety || 'Non spécifié'}</p>
+                        <div class="wine-footer">
+                            <span class="wine-price">${wine.price ? wine.price + '€' : 'Prix inconnu'}</span>
+                        </div>
+                    </div>
+                `;
             });
             
             document.getElementById('selectedWines').innerHTML = html;

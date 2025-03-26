@@ -560,3 +560,112 @@ button:focus, input:focus {
     font-weight: 700;
     color: #DA4B66;
 }
+
+/* Pour box */
+/* Box Section Styles */
+.box-section {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.box-description {
+    color: #4b5563;
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.box-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .box-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.box-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+    border: 1px solid #f3d8c7;
+    transition: transform 0.3s ease;
+}
+
+.box-card:hover {
+    transform: translateY(-5px);
+}
+
+.box-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1A232D;
+}
+
+.box-price {
+    color: #AF2240;
+}
+
+.box-details {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+.box-button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.box-button-discovery {
+    background-color: #DA4B66;
+}
+
+.box-button-discovery:hover {
+    background-color: #DA4B90;
+}
+
+.box-button-connoisseur {
+    background-color: #AF2240;
+}
+
+.box-button-connoisseur:hover {
+    background-color: #AF2264;
+}
+
+.box-results {
+    margin-top: 3rem;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 0.5rem;
+}
+
+.confirm-button {
+    background-color: #27ae60;
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    margin-top: 2rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.confirm-button:hover {
+    background-color: #219653;
+}
