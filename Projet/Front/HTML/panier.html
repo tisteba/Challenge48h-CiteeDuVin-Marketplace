@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Cave des Vins - Panier</title>
+    <link rel="icon" href="https://www.theatreponttournant.com/wp-content/uploads/2019/07/cit%C3%A9-du-vin-logo.jpg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/panier.css">
+</head>
+<body>
+    <div class="panier-container">
+        <!-- Header -->
+        <header class="header">
+            <nav class="nav-container">
+                <!-- Logo - always visible, aligned left -->
+                <div class="logo-container">
+                    <a href="http://localhost:8080/" class="nav-link">
+                    <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="logo">
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button - visible only on mobile -->
+                <button id="mobile-menu-toggle" class="mobile-menu-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+        
+                <!-- Desktop navigation - hidden on mobile -->
+                <ul class="desktop-nav">
+                    <li><a href="http://localhost:8080/TousLesVins" class="nav-link">Tous nos Vins</a></li>
+                    <li><a href="http://localhost:8080/VinsDeFrance" class="nav-link">Vins de France</a></li>
+                    <li><a href="http://localhost:8080/VinsDuMonde" class="nav-link">Vins du Monde</a></li>
+                    <li><a href="http://localhost:8080/NosPepites" class="nav-link">Nos Pépites</a></li>
+                    <li><a href="http://localhost:8080/Encheres" class="nav-link">Nos Enchères</a></li>
+                    <li><a href="http://localhost:8080/Quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <!-- Desktop search and login - hidden on mobile -->
+                <div class="desktop-search">
+                    <input type="text" placeholder="Rechercher" class="search-input">
+                    {{if .IsConnect}}
+                        <div class="user-actions">
+                            <p class="mobile-nav-link">{{.User.Prenom}}</p>
+                            <a href="http://localhost:8080/Panier" class="nav-icon" title="Panier">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                            </a>
+                            <a href="http://localhost:8080/Deconnexion" class="nav-icon" title="Déconnexion">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </a>
+                        </div>
+                    {{else}}
+                        <a href="http://localhost:8080/Connexion">
+                        <button class="login-button">Se Connecter</button>
+                        </a>
+                    {{end}}
+                </div>
+            </nav>
+            
+            <!-- Mobile Menu Overlay -->
+            <div id="mobile-menu" class="mobile-menu-overlay">
+                <div class="mobile-menu-header">
+                    <a href="http://localhost:8080/" class="nav-link">
+                    <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="mobile-logo">
+                    </a>
+                    <button id="mobile-menu-close" class="mobile-menu-close">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="mobile-menu-content">
+                    <input type="text" placeholder="Rechercher" class="mobile-search-input">
+                    {{if .IsConnect}}
+                        <div class="user-actions">
+                            <p class="mobile-nav-link">{{.User.Prenom}}</p>
+                            <a href="http://localhost:8080/Panier" class="nav-icon" title="Panier">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                            </a>
+                            <a href="http://localhost:8080/Deconnexion" class="nav-icon" title="Déconnexion">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </a>
+                        </div>
+                    {{else}}
+                        <a href="http://localhost:8080/Connexion">
+                        <button class="login-button">Se Connecter</button>
+                        </a>
+                    {{end}}
+                    <ul class="mobile-nav">
+                        <li><a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">Tous nos Vins</a></li>
+                        <li><a href="http://localhost:8080/VinsDeFrance" class="mobile-nav-link">Vins de France</a></li>
+                        <li><a href="http://localhost:8080/VinsDuMonde" class="mobile-nav-link">Vins du Monde</a></li>
+                        <li><a href="http://localhost:8080/NosPepites" class="mobile-nav-link">Nos Pépites</a></li>
+                        <li><a href="http://localhost:8080/Encheres" class="mobile-nav-link">Nos Enchères</a></li>
+                        <li><a href="http://localhost:8080/Quiz" class="mobile-nav-link">Quiz</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="panier-main">
+            <div class="panier-grid">
+                <!-- Liste des articles - Même style que ensemble.html -->
+                <section class="wine-grid"> <!-- Utilisation de la même classe -->
+                    <!-- Article 1 -->
+                    <div class="wine-card"> <!-- Même structure que ensemble.html -->
+                        <p class="wine-points">95</p> <!-- Points -->
+                        <h3 class="wine-winery">Château Margaux</h3>
+                        <p class="wine-variety">Bordeaux Rouge</p>
+                        <div class="wine-footer">
+                            <span class="wine-price">120€</span>
+                            <!-- Boutons spécifiques au panier -->
+                            <div class="panier-actions">
+                                <button class="quantity-btn">-</button>
+                                <span class="quantity">1</span>
+                                <button class="quantity-btn">+</button>
+                                <button class="remove-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 2 -->
+                    <div class="wine-card">
+                        <p class="wine-points">98</p>
+                        <h3 class="wine-winery">Domaine de la Romanée-Conti</h3>
+                        <p class="wine-variety">Bourgogne Pinot Noir</p>
+                        <div class="wine-footer">
+                            <span class="wine-price">250€</span>
+                            <div class="panier-actions">
+                                <button class="quantity-btn">-</button>
+                                <span class="quantity">1</span>
+                                <button class="quantity-btn">+</button>
+                                <button class="remove-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Résumé de commande -->
+                <aside class="panier-summary">
+                    <h2>Résumé</h2>
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span>2 articles</span>
+                            <span>370€</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Livraison</span>
+                            <span class="free-shipping">Gratuite</span>
+                        </div>
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span>370€</span>
+                        </div>
+                    </div>
+                    <button id="checkout-btn" class="checkout-btn">Passer au paiement</button>
+                </aside>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h4 class="footer-title">Nos Vins</h4>
+                    <ul class="footer-list">
+                        <li><a href="http://localhost:8080/VinsDeFrance" class="footer-link">Vins de France</a></li>
+                        <li><a href="http://localhost:8080/VinsDuMonde" class="footer-link">Vins Internationaux</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Services</h4>
+                    <ul class="footer-list">
+                        <li><a href="http://localhost:8080/" class="footer-link">Livraison</a></li>
+                        <li><a href="http://localhost:8080/" class="footer-link">Conseil</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">À Propos</h4>
+                    <ul class="footer-list">
+                        <li><a href="http://localhost:8080/" class="footer-link">Notre Histoire</a></li>
+                        <li><a href="http://localhost:8080/" class="footer-link">Nos Vignerons</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Contact</h4>
+                    <ul class="footer-list">
+                        <li><a href="http://localhost:8080/" class="footer-link">Nous Contacter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Gestion des quantités
+        document.querySelectorAll('.quantity-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const quantityElement = e.target.closest('.panier-actions').querySelector('.quantity');
+                let quantity = parseInt(quantityElement.textContent);
+                
+                if (e.target.textContent === '+' && quantity < 99) {
+                    quantity++;
+                } else if (e.target.textContent === '-' && quantity > 1) {
+                    quantity--;
+                }
+                
+                quantityElement.textContent = quantity;
+            });
+        });
+
+        // Gestion de la suppression
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (confirm('Supprimer cet article de votre panier ?')) {
+                    e.target.closest('.wine-card').remove();
+                }
+            });
+        });
+    </script>
+
+<script>
+    // Mobile Menu Toggle
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuToggle.addEventListener('click', () => {
+        mobileMenu.style.display = 'block';
+    });
+
+    mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.style.display = 'none';
+    });
+</script>
+
+<!-- Modal de paiement -->
+<div id="payment-modal" class="payment-modal">
+    <div class="payment-modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Informations de paiement</h2>
+        <form id="payment-form">
+            <div class="form-group">
+                <label for="card-name">Nom sur la carte</label>
+                <input type="text" id="card-name" required>
+            </div>
+            <div class="form-group">
+                <label for="card-number">Numéro de carte</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="expiry-date">Date d'expiration</label>
+                    <input type="text" id="expiry-date" placeholder="MM/AA" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" placeholder="123" required>
+                </div>
+            </div>
+            <button type="submit" class="submit-payment">Payer maintenant</button>
+        </form>
+    </div>
+</div>
+<script>
+    // Gestion de la modale de paiement
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const paymentModal = document.getElementById('payment-modal');
+    const closeModal = document.querySelector('.close-modal');
+    const paymentForm = document.getElementById('payment-form');
+
+    checkoutBtn.addEventListener('click', () => {
+        paymentModal.style.display = 'block';
+    });
+
+    closeModal.addEventListener('click', () => {
+        paymentModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === paymentModal) {
+            paymentModal.style.display = 'none';
+        }
+    });
+
+    paymentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Ici vous pourriez ajouter la logique de traitement du paiement
+        alert('Paiement effectué avec succès !');
+        paymentModal.style.display = 'none';
+        
+        // Redirection ou autre action après paiement
+        // window.location.href = '/confirmation';
+    });
+</script>
+</body>
+</html>
