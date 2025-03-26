@@ -654,22 +654,27 @@ button {
     padding-right: 0.5rem; /* Espacement pour le scroll */
 }
 
-/* Style personnalisé pour la scrollbar */
-.recommendations-grid::-webkit-scrollbar {
-    width: 8px;
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background: white;
+    padding-bottom: 1rem;
+    z-index: 10;
 }
 
-.recommendations-grid::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
+.sticky-footer {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding-top: 1rem;
+    z-index: 10;
+    border-top: 1px solid #e5e7eb;
 }
 
-.recommendations-grid::-webkit-scrollbar-thumb {
-    background: #AF2240;
-    border-radius: 4px;
-}
-
-.recommendations-grid::-webkit-scrollbar-thumb:hover {
-    background: #DA4B66;
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1rem 0;
 }
 }

@@ -28,7 +28,7 @@
             "Quel vin a une description mentionnant des arômes de 'crème brûlée' ?",
             "Quelle région produit le vin Quilceda Creek 1998 Cabernet Sauvignon ?",
             "Quelle est la caractéristique mentionnée dans la description du vin Pride Mountain 1999 Merlot ?",
-            "Quel vin est décrit comme ayant un potentiel de vieillissement de '10 ou 15 ans' avant d’atteindre son apogée ?"
+            "Quel vin est décrit comme ayant un potentiel de vieillissement de '10 ou 15 ans' avant d'atteindre son apogée ?"
         ];
 
         const answerOptions = [
@@ -72,8 +72,7 @@
             if (currentQuestion < questions.length) {
                 showQuestion();
             } else {
-                document.getElementById("question").textContent = "Quiz terminé !";
-                document.getElementById("btn-container").innerHTML = "";
+                endQuiz();
             }
         }
 
@@ -92,6 +91,18 @@
                 button.onclick = () => checkAnswer(option);
                 buttonContainer.appendChild(button);
             });
+        }
+
+        function endQuiz() {
+            document.getElementById("question").textContent = "Quiz terminé ! Votre score final est : " + score + "/10";
+            document.getElementById("btn-container").innerHTML = '';
+            
+            // Création du bouton Retour
+            const returnButton = document.createElement('button');
+            returnButton.className = 'btn';
+            returnButton.textContent = "Retour à l'accueil";
+            returnButton.onclick = () => window.location.href = '/HomePage';
+            document.getElementById("btn-container").appendChild(returnButton);
         }
 
         showQuestion();
