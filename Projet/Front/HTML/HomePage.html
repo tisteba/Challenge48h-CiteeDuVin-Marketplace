@@ -114,6 +114,26 @@
             
             <!-- Desktop search and login - hidden on mobile -->
             <div class="desktop-search">
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-button">
+                        <img src="https://flagcdn.com/w40/fr.png" alt="French" class="flag">
+                        <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="language-dropdown">
+                        <a href="#" class="language-option" data-lang="en">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="English" class="flag">
+                            <span>English</span>
+                        </a>
+                        <a href="#" class="language-option" data-lang="es">
+                            <img src="https://flagcdn.com/w40/es.png" alt="Spanish" class="flag">
+                            <span>Español</span>
+                        </a>
+                    </div>
+                </div>
+                
                 <input type="text" placeholder="Rechercher" class="search-input">
                 {{if .IsConnect}}
                     <div class="user-actions">
@@ -282,6 +302,26 @@
     </footer>
 
     <script>
+        // Language selector functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const languageOptions = document.querySelectorAll('.language-option');
+    
+    languageOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            const flagImg = this.querySelector('img');
+            const mainButton = document.querySelector('.language-button img');
+            
+            // Swap flags
+            const tempSrc = mainButton.src;
+            mainButton.src = flagImg.src;
+            flagImg.src = tempSrc;
+            
+            // Here you would add code to actually change the language
+            console.log('Language changed to:', this.querySelector('img').alt);
+        });
+    });
+});
         // Mobile Menu Toggle
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileMenuClose = document.getElementById('mobile-menu-close');

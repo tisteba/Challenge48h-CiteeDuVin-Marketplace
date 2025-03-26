@@ -615,3 +615,66 @@ button:focus, input:focus {
     padding-left: 1.5rem; /* Match text alignment */
     text-align: left;
 }
+
+/* Language Selector Styles */
+.language-selector {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.language-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.flag {
+    width: 24px;
+    height: 16px;
+    border-radius: 2px;
+    transition: transform 0.2s;
+}
+
+.language-button:hover .flag {
+    transform: scale(1.1);
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 100;
+    min-width: 40px;
+}
+
+.language-selector:hover .language-dropdown {
+    display: block;
+}
+
+.language-option {
+    display: block;
+    padding: 5px 8px;
+}
+
+.language-option:hover {
+    background-color: #f5f5f5;
+}
+
+/* Adjust desktop search to accommodate language selector */
+.desktop-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-input {
+    flex-grow: 1;
+}
