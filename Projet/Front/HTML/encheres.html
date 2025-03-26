@@ -122,14 +122,23 @@
                 </div>
 
                 <div class="wine-grid">
-                    {{range .WineList}}
-                        <div class="wine-card">
-                            <p class="wine-points">{{.Points}}</p>
-                            <h3 class="wine-winery">{{.Winery}}</h3>
-                            <p class="wine-variety">{{.Variety}}</p>
+                    {{range $index, $wine := .WineList}}
+                        <div class="wine-card {{if ge $index 18}}hidden{{end}}">
+                            <p class="wine-points">{{$wine.Points}}</p>
+                            <h3 class="wine-winery">{{$wine.Winery}}</h3>
+                            <p class="wine-variety">{{$wine.Variety}}</p>
                             <div class="wine-footer">
-                                <span class="wine-price">{{.Price}} €</span>
-                                <button class="add-button">Ajouter</button>
+                                {{if eq $wine.Price 0}}
+                                    Enchères
+                                {{else}}
+                                    <span class="wine-price">{{$wine.Price}}</span>
+                                {{end}}
+
+                                {{if eq $wine.Price 0}}
+                                    <button class="add-button">Enchérir</button>
+                                {{else}}
+                                    <button class="add-button">Ajouter</button>
+                                {{end}}
                             </div>
                         </div>
                     {{end}}
