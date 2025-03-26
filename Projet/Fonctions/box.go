@@ -46,13 +46,15 @@ func filterWinesForBox(wines []Wine, maxTotalPrice int, count int) []Wine {
 	var selected []Wine
 	remainingBudget := maxTotalPrice
 
-	// Filtre initial : vins avec un score > 85
+	// Filtre initial : vins avec score > 85 ET prix > 0 ET prix <= budget
 	var candidates []Wine
 	for _, wine := range wines {
-		if wine.Points >= 85 && wine.Price <= remainingBudget {
+		if wine.Points >= 85 && wine.Price > 0 && wine.Price <= remainingBudget {
 			candidates = append(candidates, wine)
 		}
 	}
+
+	// ... (le reste de la fonction reste identique)
 
 	// Sélection aléatoire
 	for len(selected) < count && len(candidates) > 0 {
