@@ -640,4 +640,36 @@ button {
     .logo-container {
         margin-right: auto;
     }
+
+    /* Ajoutez ces règles à la fin du fichier */
+.modal-content.wide-modal {
+    max-height: 80vh; /* 80% de la hauteur visible */
+    overflow-y: auto; /* Scroll vertical si nécessaire */
+    padding-right: 1rem; /* Espace pour éviter que le scroll ne chevauche le contenu */
+}
+
+.recommendations-grid {
+    max-height: calc(80vh - 150px); /* Ajustement pour le header/footer */
+    overflow-y: auto;
+    padding-right: 0.5rem; /* Espacement pour le scroll */
+}
+
+/* Style personnalisé pour la scrollbar */
+.recommendations-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.recommendations-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.recommendations-grid::-webkit-scrollbar-thumb {
+    background: #AF2240;
+    border-radius: 4px;
+}
+
+.recommendations-grid::-webkit-scrollbar-thumb:hover {
+    background: #DA4B66;
+}
 }
