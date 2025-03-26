@@ -20,6 +20,8 @@ func SetHttp() {
 	http.HandleFunc("/Connexion", ConnexionPage)
 	http.HandleFunc("/Inscription", InscriptionPage)
 	http.HandleFunc("/PriseRdv", RdvPage)
+	http.HandleFunc("/Box", BoxPage)
+	http.HandleFunc("/api/lootbox", GetLootBox)
 
 	SetDB()
 }
