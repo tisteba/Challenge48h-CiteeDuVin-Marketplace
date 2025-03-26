@@ -499,3 +499,20 @@ button:focus, input:focus {
     margin-left: auto;
     margin-right: 1rem; /* Keep some right margin */
 }
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 0;
+    margin: 2rem 0;
+    align-items: center; /* This centers the items horizontally */
+    list-style: none; /* Removes bullet points */
+}
+
+.mobile-nav-link {
+    text-align: center; /* This centers the text within each link */
+    width: 100%;
+    padding: 0.5rem 0;
+}

@@ -1,17 +1,42 @@
+/* Layout Structure */
 body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f2f2;
     background-image: url(image/vin.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
 
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #1A232D;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.footer {
+    background-color: #1f2937;
+    color: white;
+    padding: 2rem 0;
+    margin-top: auto;
+}
+
+/* Login Container */
 .container {
     background-color: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -19,31 +44,42 @@ body {
     padding: 40px;
     text-align: center;
     max-width: 400px;
+    width: 100%;
+    margin: 2rem auto;
 }
 
 h2 {
     color: #8B0000;
     font-size: 24px;
+    margin-bottom: 1.5rem;
 }
 
 input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 16px;
 }
 
 .btn {
     background-color: #8B0000;
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
     width: 100%;
+    margin-top: 1rem;
+    /* Remove outline and shadow */
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .btn:hover {
@@ -53,41 +89,12 @@ input {
 .toggle {
     color: #8B0000;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 15px;
     display: block;
-}
-
-/* Base Styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f9fafb;
-    margin: 0;
-    padding: 0;
-}
-
-/* Button Base Styles */
-button {
-    outline: none;
-    border: none;
-    box-shadow: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: none;
-    cursor: pointer;
-}
-
-button:focus, input:focus {
-    outline: none;
-    box-shadow: none;
+    text-decoration: none;
 }
 
 /* Header Styles */
-.header {
-    background-color: #1A232D;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
 .nav-container {
     max-width: 1280px;
     margin: 0 auto;
@@ -189,21 +196,20 @@ button:focus, input:focus {
 }
 
 .mobile-nav {
-    text-align: center;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     width: 100%;
     padding: 0;
     margin: 2rem 0;
-    align-items: flex-start; /* Changed from center to flex-start */
-    padding-left: 2rem; /* Add left padding */
+    align-items: center; /* Center the items */
+    list-style: none; /* Remove bullet points */
 }
 
 .mobile-nav-link {
-    text-align: left; /* Align text to left */
-    width: auto; /* Remove full width */
-    padding: 0.5rem 1rem;
+    text-align: center; /* Center the text */
+    width: 100%;
+    padding: 0.5rem 0;
 }
 
 /* Button Styles */
@@ -217,6 +223,10 @@ button:focus, input:focus {
     border-radius: 9999px;
     transition: background-color 0.2s;
     white-space: nowrap;
+    /* Remove outline */
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
 }
 
 .login-button:hover, 
@@ -226,87 +236,7 @@ button:focus, input:focus {
     background-color: #DA4B66;
 }
 
-/* Main Content */
-.main-container {
-    max-width: 80rem;
-    margin: 2rem auto 0;
-    padding: 0 1rem;
-}
-
-.wine-section {
-    width: 100%;
-    max-width: 1280px;
-}
-
-.section-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.wine-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-}
-
-.wine-card {
-    position: relative;
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    padding: 1rem;
-    text-align: center;
-}
-
-.wine-points {
-    position: absolute;
-    left: 5px;
-    top: 5px;
-}
-
-.wine-winery {
-    font-weight: 600;
-}
-
-.wine-variety {
-    color: #4b5563;
-}
-
-.wine-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-}
-
-.wine-price {
-    font-weight: 700;
-    color: #DA4B66;
-}
-
-.more-button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-}
-
 /* Footer */
-.footer {
-    background-color: #1f2937;
-    color: white;
-    margin-top: 3rem;
-    padding: 2rem 0;
-}
-
 .footer-container {
     max-width: 80rem;
     margin: 0 auto;
@@ -330,235 +260,14 @@ button:focus, input:focus {
 .footer-link {
     color: #d1d5db;
     transition: color 0.2s;
+    text-decoration: none;
 }
 
 .footer-link:hover {
     color: white;
 }
 
-/* Media Queries */
-@media (min-width: 768px) {
-    .logo-container {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .mobile-menu-button {
-        display: none;
-    }
-    
-    .desktop-nav {
-        display: flex;
-    }
-    
-    .desktop-search {
-        display: flex;
-    }
-    
-    .section-header {
-        flex-direction: row;
-    }
-    
-    .section-title {
-        margin-bottom: 0;
-    }
-    
-    .wine-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .footer-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .wine-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* Utility Classes */
-.hidden {
-    display: none !important;
-}
-
-.mobile-menu-close {
-    color: white;
-    background: transparent;
-    border: none;
-    padding: 0;
-}
-
-.mobile-logo {
-    height: 2rem; /* Reduced from 2.5rem */
-}
-
-.mobile-search-input {
-    border: 1px solid #e5e7eb;
-    border-radius: 9999px;
-    padding: 0.5rem 1rem;
-    background-color: #FCF5F4;
-    color: #111827;
-    width: 80%;
-    margin: 0 auto;
-    font-size: 1rem;
-}
-
-.mobile-nav-link {
-    color: white;
-    transition: color 0.2s;
-    font-size: 1.1rem;
-    width: 100%;
-    text-align: center;
-    padding: 0.5rem 0;
-}
-
-.mobile-login-button {
-    width: 80%;
-    margin: 0 auto;
-}
-
-/* Mobile Menu Styles */
-.mobile-menu-overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #1A232D;
-    z-index: 50;
-    display: none;
-    overflow-y: auto;
-}
-
-.mobile-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 1rem;
-    background-color: #1A232D;
-    position: sticky;
-    top: 0;
-}
-
-.mobile-logo {
-    height: 2rem;
-    width: auto;
-}
-
-.mobile-menu-close {
-    color: white;
-    background: transparent;
-    border: none;
-    padding: 0.5rem;
-    margin: -0.5rem;
-}
-
-.close-icon {
-    height: 1.5rem;
-    width: 1.5rem;
-    stroke: white; /* Ensures the X is white */
-}
-
-.mobile-menu-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 1rem 2rem;
-    gap: 1.5rem;
-}
-
-.mobile-search-input {
-    border: 1px solid #e5e7eb;
-    border-radius: 9999px;
-    padding: 0.75rem 1.25rem;
-    background-color: #FCF5F4;
-    color: #111827;
-    width: 100%;
-    max-width: 400px;
-    font-size: 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.mobile-login-button {
-    background-color: #AF2240;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    border: none;
-    font-size: 1rem;
-    width: 100%;
-    max-width: 200px;
-    transition: background-color 0.2s;
-}
-
-.mobile-login-button:hover {
-    background-color: #DA4B66;
-}
-
-.mobile-nav {
-    width: 100%;
-    max-width: 400px;
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-}
-
-.mobile-nav-link {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    padding: 0.5rem 1rem;
-    transition: color 0.2s;
-    display: block;
-    text-align: center;
-    width: 100%;
-}
-
-.mobile-nav-link:hover {
-    color: #DA4B66;
-}
-
-/* Update the desktop nav styles */
-.desktop-nav {
-    display: none;
-    gap: 1.5rem;
-    color: white;
-    margin-left: 2rem; /* Increased from 1rem */
-    padding-left: 0;
-    list-style: none;
-}
-
-@media (min-width: 768px) {
-    .desktop-nav {
-        display: flex;
-        margin-right: auto;
-        margin-left: 3rem; /* Even more to the left if needed */
-    }
-}
-
-/* Adjust logo positioning to accommodate */
-@media (min-width: 768px) {
-    .logo-container {
-        position: static;
-        transform: none;
-        margin-right: auto;
-        margin-left: 1rem; /* Add some left margin to logo */
-    }
-}
-
-/* Adjust search container positioning */
-.desktop-search {
-    margin-left: auto;
-    margin-right: 1rem; /* Keep some right margin */
-}
-
+/* User Actions */
 .user-actions {
     display: flex;
     align-items: center;
@@ -572,12 +281,17 @@ button:focus, input:focus {
     transition: opacity 0.3s;
 }
 
+.nav-icon:hover {
+    opacity: 0.8;
+    color: #DA4B66;
+}
+
 .nav-icon svg {
     width: 20px;
     height: 20px;
 }
 
-/* For mobile menu */
+/* Mobile Menu User Actions */
 .mobile-menu-content .user-actions {
     padding: 10px 0;
     margin-bottom: 10px;
@@ -585,19 +299,95 @@ button:focus, input:focus {
 }
 
 .mobile-menu-content .nav-icon {
-    color: white; /* Changed from #333 to white */
+    color: white;
 }
 
 .mobile-menu-content .nav-icon svg {
-    stroke: white; /* Ensure SVG strokes are white too */
+    stroke: white;
     width: 24px;
     height: 24px;
 }
 
-.nav-icon:hover {
-    color : #DA4B66 ;
+/* Mobile menu close button - no background */
+.mobile-menu-close {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
 }
 
-.user-actions:hover {
-    color : #DA4B66 
+/* Keep logo same size in mobile menu */
+.mobile-logo {
+    height: 2.5rem; /* Same as desktop logo */
+    width: auto;
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+    .logo-container {
+        position: static;
+        transform: none;
+        margin-right: auto;
+    }
+    
+    .mobile-menu-button {
+        display: none;
+    }
+    
+    .desktop-nav {
+        display: flex;
+        margin-left: 2rem;
+    }
+    
+    .desktop-search {
+        display: flex;
+    }
+    
+    .footer-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .desktop-nav {
+        margin-left: 3rem;
+    }
+}
+
+/* Add this to fix the close button color */
+.mobile-menu-close .close-icon {
+    stroke: white !important;
+}
+
+/* Update the button styles to completely remove outline */
+.btn {
+    background-color: #8B0000;
+    color: #fff;
+    padding: 12px 20px;
+    border: none !important;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 1rem;
+    /* Complete outline removal */
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Add focus state to ensure no outline appears */
+.btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Update the login button class as well */
+.login-button {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
 }
