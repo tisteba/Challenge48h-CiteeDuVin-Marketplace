@@ -46,7 +46,7 @@ func HomePageGet(w http.ResponseWriter, r *http.Request) {
 
 	cookie, err := r.Cookie("user_id")
 	if err != nil {
-		http.Redirect(w, r, "/Authentication", http.StatusSeeOther)
+		http.Redirect(w, r, "/Connexion", http.StatusSeeOther)
 		return
 	}
 
