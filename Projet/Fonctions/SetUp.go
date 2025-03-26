@@ -19,6 +19,7 @@ func SetHttp() {
 	http.HandleFunc("/Quiz", QuizPage)
 	http.HandleFunc("/Connexion", ConnexionPage)
 	http.HandleFunc("/Inscription", InscriptionPage)
+	http.HandleFunc("/Encheres", EncheresPage)
 	http.HandleFunc("/PriseRdv", RdvPage)
 	http.HandleFunc("/Box", BoxPage)
 	http.HandleFunc("/api/lootbox", GetLootBox)
