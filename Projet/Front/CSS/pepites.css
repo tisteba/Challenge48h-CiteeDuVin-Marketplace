@@ -655,7 +655,7 @@ button:focus, input:focus {
 }
 
 .confirm-button {
-    background-color: #27ae60;
+    background-color: #AF2240;
     color: white;
     padding: 0.75rem 2rem;
     border-radius: 9999px;
@@ -667,5 +667,5 @@ button:focus, input:focus {
 }
 
 .confirm-button:hover {
-    background-color: #219653;
+    background-color: #AF2264;
 }
