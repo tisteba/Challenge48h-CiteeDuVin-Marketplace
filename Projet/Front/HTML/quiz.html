@@ -1,23 +1,174 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>quiz</title>
+    <title>Cave des Vins - Quiz</title>
+    <link rel="icon" href="https://www.theatreponttournant.com/wp-content/uploads/2019/07/cit%C3%A9-du-vin-logo.jpg" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/quiz.css">
 </head>
-
 <body>
-    <div class="quiz-container">
-        <h2>Quiz sur les vins</h2>
-        <p id="question">Chargement...</p>
-        <p id="score">Score : 0/10</p>
-        <div class="btn-container" id="btn-container"></div>
-    </div>
+    <header class="header">
+        <nav class="nav-container">
+            <!-- Logo - always visible, aligned left -->
+            <div class="logo-container">
+                <a href="http://localhost:8080/" class="nav-link">
+                <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="logo">
+                </a>
+            </div>
+            
+            <!-- Mobile menu button - visible only on mobile -->
+            <button id="mobile-menu-toggle" class="mobile-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+    
+            <!-- Desktop navigation - hidden on mobile -->
+            <ul class="desktop-nav">
+                <li><a href="http://localhost:8080/TousLesVins" class="nav-link">Tous nos Vins</a></li>
+                <li><a href="http://localhost:8080/VinsDeFrance" class="nav-link">Vins de France</a></li>
+                <li><a href="http://localhost:8080/VinsDuMonde" class="nav-link">Vins du Monde</a></li>
+                <li><a href="http://localhost:8080/NosPepites" class="nav-link">Nos Pépites</a></li>
+                <li><a href="http://localhost:8080/Encheres" class="nav-link">Nos Enchères</a></li>
+                <li><a href="http://localhost:8080/Quiz" class="nav-link">Quiz</a></li>
+            </ul>
+            
+            <!-- Desktop search and login - hidden on mobile -->
+            <div class="desktop-search">
+                <input type="text" placeholder="Rechercher" class="search-input">
+                {{if .IsConnect}}
+                    <div class="user-actions">
+                        <p class="mobile-nav-link">{{.User.Prenom}}</p>
+                        <a href="http://localhost:8080/Panier" class="nav-icon" title="Panier">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </a>
+                        <a href="http://localhost:8080/Deconnexion" class="nav-icon" title="Déconnexion">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                        </a>
+                    </div>
+                {{else}}
+                    <a href="http://localhost:8080/Connexion">
+                    <button class="login-button">Se Connecter</button>
+                    </a>
+                {{end}}
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="mobile-menu-overlay">
+            <div class="mobile-menu-header">
+                <a href="http://localhost:8080/" class="nav-link">
+                <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="mobile-logo">
+                </a>
+                <button id="mobile-menu-close" class="mobile-menu-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-menu-content">
+                <input type="text" placeholder="Rechercher" class="mobile-search-input">
+                {{if .IsConnect}}
+                    <div class="user-actions">
+                        <p class="mobile-nav-link">{{.User.Prenom}}</p>
+                        <a href="http://localhost:8080/Panier" class="nav-icon" title="Panier">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </a>
+                        <a href="http://localhost:8080/Deconnexion" class="nav-icon" title="Déconnexion">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                        </a>
+                    </div>
+                {{else}}
+                    <a href="http://localhost:8080/Connexion">
+                    <button class="login-button">Se Connecter</button>
+                    </a>
+                {{end}}
+                <ul class="mobile-nav">
+                    <li><a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">Tous nos Vins</a></li>
+                    <li><a href="http://localhost:8080/VinsDeFrance" class="mobile-nav-link">Vins de France</a></li>
+                    <li><a href="http://localhost:8080/VinsDuMonde" class="mobile-nav-link">Vins du Monde</a></li>
+                    <li><a href="http://localhost:8080/NosPepites" class="mobile-nav-link">Nos Pépites</a></li>
+                    <li><a href="http://localhost:8080/Encheres" class="mobile-nav-link">Nos Enchères</a></li>
+                    <li><a href="http://localhost:8080/Quiz" class="mobile-nav-link">Quiz</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="quiz-container">
+            <h2 class="quiz-title">Quiz sur les vins</h2>
+            <p id="question" class="quiz-question">Chargement...</p>
+            <p id="score" class="quiz-score">Score : 0/10</p>
+            <div class="quiz-btn-container" id="btn-container"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4 class="footer-title">Nos Vins</h4>
+                <ul class="footer-list">
+                    <li><a href="http://localhost:8080/VinsDeFrance" class="footer-link">Vins de France</a></li>
+                    <li><a href="http://localhost:8080/VinsDuMonde" class="footer-link">Vins Internationaux</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-list">
+                    <li><a href="http://localhost:8080/" class="footer-link">Livraison</a></li>
+                    <li><a href="http://localhost:8080/" class="footer-link">Conseil</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">À Propos</h4>
+                <ul class="footer-list">
+                    <li><a href="http://localhost:8080/" class="footer-link">Notre Histoire</a></li>
+                    <li><a href="http://localhost:8080/" class="footer-link">Nos Vignerons</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-list">
+                    <li><a href="http://localhost:8080/" class="footer-link">Nous Contacter</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 
     <script>
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+    
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.style.display = 'block';
+        });
+    
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.style.display = 'none';
+        });
+
+        // Quiz Script
         const questions = [
             "Quel cépage est utilisé pour le vin Caymus 1998 de la Napa Valley ?",
             "Quel pays produit le vin M. Chapoutier 1999 Le Méal Ermitage ?",
@@ -86,7 +237,7 @@
             buttonContainer.innerHTML = '';
             options.forEach(option => {
                 const button = document.createElement('button');
-                button.className = 'btn';
+                button.className = 'quiz-btn';
                 button.textContent = option;
                 button.onclick = () => checkAnswer(option);
                 buttonContainer.appendChild(button);
@@ -99,7 +250,7 @@
             
             // Création du bouton Retour
             const returnButton = document.createElement('button');
-            returnButton.className = 'btn';
+            returnButton.className = 'quiz-btn';
             returnButton.textContent = "Retour à l'accueil";
             returnButton.onclick = () => window.location.href = '/HomePage';
             document.getElementById("btn-container").appendChild(returnButton);
