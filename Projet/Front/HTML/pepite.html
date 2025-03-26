@@ -31,7 +31,7 @@
                     <li><a href="http://localhost:8080/VinsDeFrance" class="nav-link">Vins de France</a></li>
                     <li><a href="http://localhost:8080/VinsDuMonde" class="nav-link">Vins du Monde</a></li>
                     <li><a href="http://localhost:8080/NosPepites" class="nav-link">Nos Pépites</a></li>
-                    <li><a href="#" class="nav-link">Nos Enchères</a></li>
+                    <li><a href="http://localhost:8080/Encheres" class="nav-link">Nos Enchères</a></li>
                     <li><a href="http://localhost:8080/Quiz" class="nav-link">Quiz</a></li>
             </ul>
             
@@ -74,7 +74,7 @@
                     <li><a href="http://localhost:8080/VinsDeFrance" class="mobile-nav-link">Vins de France</a></li>
                     <li><a href="http://localhost:8080/VinsDuMonde" class="mobile-nav-link">Vins du Monde</a></li>
                     <li><a href="http://localhost:8080/NosPepites" class="mobile-nav-link">Nos Pépites</a></li>
-                    <li><a href="#" class="nav-link">Nos Enchères</a></li>
+                    <li><a href="http://localhost:8080/Encheres" class="nav-link">Nos Enchères</a></li>
                     <li><a href="http://localhost:8080/Quiz" class="mobile-nav-link">Quiz</a></li>
                 </ul>
             </div>
@@ -96,7 +96,7 @@
                             <p class="wine-variety">{{$wine.Variety}}</p>
                             <div class="wine-footer">
                                 {{if eq $wine.Price 0}}
-                                    Enchères
+                                    <span class="wine-price">Enchères</span>
                                 {{else}}
                                     <span class="wine-price">{{$wine.Price}}</span>
                                 {{end}}

@@ -516,3 +516,59 @@ button:focus, input:focus {
     width: 100%;
     padding: 0.5rem 0;
 }
+
+.wine-card {
+    position: relative;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+    padding-left: 3rem; /* Add left padding to make space for the circle */
+    text-align: center;
+    overflow: hidden;
+}
+
+.wine-points {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 36px;
+    height: 36px;
+    background-color: #8B0000;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.wine-winery {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    color: #333;
+    padding-left: 1rem; /* Additional padding if needed */
+    margin-left: 0.5rem; /* Space from the circle */
+    text-align: left; /* Align text to left */
+    word-break: break-word; /* Prevent long words from overflowing */
+}
+
+.wine-variety {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+    text-align: left; /* Align text to left */
+    padding-left: 1.5rem; /* Match winery alignment */
+}
+
+.wine-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-left: 1.5rem; /* Match text alignment */
+    text-align: left;
+}

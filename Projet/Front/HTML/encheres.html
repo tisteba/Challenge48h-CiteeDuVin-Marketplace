@@ -129,7 +129,7 @@
                             <p class="wine-variety">{{$wine.Variety}}</p>
                             <div class="wine-footer">
                                 {{if eq $wine.Price 0}}
-                                    Enchères
+                                    <span class="wine-price">Enchères</span>
                                 {{else}}
                                     <span class="wine-price">{{$wine.Price}}</span>
                                 {{end}}
