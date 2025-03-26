@@ -499,3 +499,46 @@ button:focus, input:focus {
     margin-left: auto;
     margin-right: 1rem; /* Keep some right margin */
 }
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-icon {
+    color: white;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s;
+}
+
+.nav-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* For mobile menu */
+.mobile-menu-content .user-actions {
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu-content .nav-icon {
+    color: white; /* Changed from #333 to white */
+}
+
+.mobile-menu-content .nav-icon svg {
+    stroke: white; /* Ensure SVG strokes are white too */
+    width: 24px;
+    height: 24px;
+}
+
+.nav-icon:hover {
+    color : #DA4B66 ;
+}
+
+.user-actions:hover {
+    color : #DA4B66 
+}
