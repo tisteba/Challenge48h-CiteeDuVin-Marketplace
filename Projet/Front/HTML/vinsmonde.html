@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Cave des Vins - Marketplace</title>
+    <link rel="icon" href="https://www.theatreponttournant.com/wp-content/uploads/2019/07/cit%C3%A9-du-vin-logo.jpg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/vinsmonde.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <!-- Logo - always visible, aligned left -->
+            <div class="logo-container">
+                <a href="http://localhost:8080/" class="nav-link">
+                <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="logo">
+                </a>
+            </div>
+            
+            <!-- Mobile menu button - visible only on mobile -->
+            <button id="mobile-menu-toggle" class="mobile-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+    
+            <!-- Desktop navigation - hidden on mobile -->
+            <ul class="desktop-nav">
+                <li><a href="http://localhost:8080/TousLesVins" class="nav-link">Tous nos Vins</a></li>
+                <li><a href="http://localhost:8080/VinsDeFrance" class="nav-link">Vins de France</a></li>
+                <li><a href="http://localhost:8080/VinsDuMonde" class="nav-link">Vins du Monde</a></li>
+                <li><a href="http://localhost:8080/NosPepites" class="nav-link">Nos Pépites</a></li>
+                <li><a href="#" class="nav-link">Nos Enchères</a></li>
+                <li><a href="http://localhost:8080/Quiz" class="nav-link">Quiz</a></li>
+            </ul>
+            
+            <!-- Desktop search and login - hidden on mobile -->
+            <div class="desktop-search">
+                <input type="text" placeholder="Rechercher" class="search-input">
+                {{if .IsConnect}}
+                    <p class="mobile-nav-link">{{.User.Prenom}}</p>
+                {{else}}
+                    <a href="http://localhost:8080/Connexion">
+                    <button class="login-button">Se Connecter</button>
+                    </a>
+                {{end}}
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="mobile-menu-overlay">
+            <div class="mobile-menu-header">
+                <a href="http://localhost:8080/" class="nav-link">
+                <img src="https://www.laciteduvin.com/packs/media/images/logo-white-production-163f2b88b7f1b97a094930b7b653ae63.svg" alt="Logo" class="mobile-logo">
+                </a>
+                <button id="mobile-menu-close" class="mobile-menu-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-menu-content">
+                <input type="text" placeholder="Rechercher" class="mobile-search-input">
+                {{if .IsConnect}}
+                    <p class="mobile-nav-link">{{.User.Prenom}}</p>
+                {{else}}
+                    <a href="http://localhost:8080/Connexion">
+                    <button class="login-button">Se Connecter</button>
+                    </a>
+                {{end}}
+                <ul class="mobile-nav">
+                    <li><a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">Tous nos Vins</a></li>
+                    <li><a href="http://localhost:8080/VinsDeFrance" class="mobile-nav-link">Vins de France</a></li>
+                    <li><a href="http://localhost:8080/VinsDuMonde" class="mobile-nav-link">Vins du Monde</a></li>
+                    <li><a href="http://localhost:8080/NosPepites" class="mobile-nav-link">Nos Pépites</a></li>
+                    <li><a href="#" class="mobile-nav-link">Nos Enchères</a></li>
+                    <li><a href="http://localhost:8080/Quiz" class="mobile-nav-link">Quiz</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="main-content">
+            <section class="wine-section">
+                <div class="section-header">
+                    <!-- Country dropdown button -->
+                    <div class="country-dropdown">
+                        <button onclick="toggleDropdown()" class="country-btn">Pays</button>
+                        <div id="countryDropdown" class="dropdown-content">
+                            <a href="#">France</a>
+                            <a href="#">Italie</a>
+                            <a href="#">Espagne</a>
+                            <a href="#">Chili</a>
+                            <a href="#">Australie</a>
+                        </div>
+                    </div>
+                </div>
+                    
+                    <h1 class="section-title">Pays</h1>
+            </div>
+
+                <div class="wine-grid">
+                    {{range .WineList}}
+                        <div class="wine-card">
+                            <p class="wine-points">{{.Points}}</p>
+                            <h3 class="wine-winery">{{.Winery}}</h3>
+                            <p class="wine-variety">{{.Variety}}</p>
+                            <div class="wine-footer">
+                                <span class="wine-price">{{.Price}} €</span>
+                                <button class="add-button">Ajouter</button>
+                            </div>
+                        </div>
+                    {{end}}
+                </div>
+
+                <div class="more-button-container">
+                    <a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">
+                        <button class="more-button">Voir plus de vins</button>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4 class="footer-title">Nos Vins</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Vins de France</a></li>
+                    <li><a href="#" class="footer-link">Vins Internationaux</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Livraison</a></li>
+                    <li><a href="#" class="footer-link">Conseil</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">À Propos</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Notre Histoire</a></li>
+                    <li><a href="#" class="footer-link">Nos Vignerons</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-list">
+                    <li><a href="#" class="footer-link">Nous Contacter</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle - Make sure this is in your HTML
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+    
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.style.display = 'block'; // Changed from classList to style
+        });
+    
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.style.display = 'none'; // Changed from classList to style
+        });
+        
+        // Country dropdown functionality
+        function toggleDropdown() {
+            const dropdown = document.getElementById("countryDropdown");
+            const button = document.querySelector(".country-btn");
+            dropdown.classList.toggle("show");
+            button.classList.toggle("active");
+        }
+        
+        // Close the dropdown if clicked outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.country-btn')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                const buttons = document.getElementsByClassName("country-btn");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                        buttons[i].classList.remove('active');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
