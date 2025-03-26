@@ -13,6 +13,8 @@ var StockMessageErreurConnexion string
 
 type DataConnexion struct {
 	MessageErreur string
+	IsConnect     bool
+	User          db.DB
 }
 
 func ConnexionPage(w http.ResponseWriter, r *http.Request) {
@@ -28,8 +30,16 @@ func ConnexionPage(w http.ResponseWriter, r *http.Request) {
 func ConnexionGet(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("../Front/HTML/connexion.html"))
 
+	cookie, err := r.Cookie("user_id")
+	if err != nil {
+		http.Redirect(w, r, "/Connexion", http.StatusSeeOther)
+		return
+	}
+
 	data := DataConnexion{
 		MessageErreur: StockMessageErreurConnexion,
+		IsConnect:     IsConnectStock,
+		User:          db.GetUser(cookie.Value),
 	}
 
 	StockMessageErreurConnexion = ""
