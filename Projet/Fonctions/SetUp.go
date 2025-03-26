@@ -23,6 +23,7 @@ func SetHttp() {
 	http.HandleFunc("/PriseRdv", RdvPage)
 	http.HandleFunc("/Box", BoxPage)
 	http.HandleFunc("/api/lootbox", GetLootBox)
+	http.HandleFunc("/Panier", PanierPage)
 
 	SetDB()
 }
