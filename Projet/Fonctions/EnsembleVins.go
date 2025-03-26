@@ -40,7 +40,7 @@ func EnsembleVinsGet(w http.ResponseWriter, r *http.Request) {
 
 	data := DataEnsemble{
 		WineList:  wines,
-		IsConnect: true,
+		IsConnect: IsConnectStock,
 		User:      db.GetUser(cookie.Value),
 	}
 	tmpl.Execute(w, data)
