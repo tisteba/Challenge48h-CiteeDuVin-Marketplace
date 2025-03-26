@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Même head que ensemble.html -->
+    <title>Cave des Vins - Box Mystère</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-md">
+        <!-- Reprenez le même header que ensemble.html -->
+    </header>
+
+    <main class="container mx-auto py-8">
+        <section class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-amber-700">🎁 Box Mystère</h1>
+            <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+                Laissez-nous vous surprendre avec une sélection exclusive de vins soigneusement choisis par notre algorithme 🤓.
+                <br>Qualité garantie (tous nos vins ont 85+ points).
+            </p>
+        </section>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Box 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-md border border-amber-200">
+                <h2 class="text-xl font-bold mb-2">Box Découverte <span class="text-amber-600">(30€)</span></h2>
+                <p class="mb-4">2 bouteilles mystères - Parfait pour commencer</p>
+                <button 
+                    onclick="selectBox(30, 2)" 
+                    class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 rounded">
+                    Je tente l'aventure !
+                </button>
+            </div>
+
+            <!-- Box 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-md border border-amber-200">
+                <h2 class="text-xl font-bold mb-2">Box Connoisseur <span class="text-amber-600">(60€)</span></h2>
+                <p class="mb-4">3 bouteilles premium - Pour les amateurs éclairés</p>
+                <button 
+                    onclick="selectBox(60, 3)" 
+                    class="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 rounded">
+                    Je veux la qualité !
+                </button>
+            </div>
+        </div>
+
+        <!-- Résultats chargés ici -->
+        <div id="boxResults" class="mt-12 hidden">
+            <h2 class="text-2xl font-bold mb-6">Votre sélection mystère :</h2>
+            <div id="selectedWines" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+            <button 
+                onclick="confirmOrder()" 
+                class="mt-8 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg">
+                Confirmer ma commande
+            </button>
+        </div>
+    </main>
+
+    <script>
+        async function selectBox(budget, bottleCount) {
+            const response = await fetch(`/api/lootbox?budget=${budget}&count=${bottleCount}`);
+            const wines = await response.json();
+            
+            let html = '';
+            wines.forEach(wine => {
+                html += `
+    <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-bold">${wine.winery || 'Domaine inconnu'}</h3>
+        <p class="text-gray-600">${wine.variety || 'Non spécifié'}</p>
+        <p class="text-amber-600 font-bold">${wine.price ? wine.price + '€' : 'Prix inconnu'}</p>
+        <p class="text-sm">Note: ${wine.points || '?'}/100</p>
+    </div>
+`;
+            });
+            
+            document.getElementById('selectedWines').innerHTML = html;
+            document.getElementById('boxResults').classList.remove('hidden');
+            window.scrollTo({ top: document.getElementById('boxResults').offsetTop, behavior: 'smooth' });
+        }
+
+        function confirmOrder() {
+            alert('Commande confirmée ! Merci pour votre achat.');
+            // Ici, vous pourriez ajouter une redirection vers un panier
+        }
+    </script>
+</body>
+</html>
