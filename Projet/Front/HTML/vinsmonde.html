@@ -98,13 +98,15 @@
                     </div>
                 </div>
                     
-                    <h1 class="section-title">Pays</h1>
+                    <h1 class="section-title">Pays</h1><br>
             </div>
-
+            {{range .Vins}}
+            <h1>{{.Pays}}</h1>
                 <div class="wine-grid">
                     {{range .WineList}}
                         <div class="wine-card">
                             <p class="wine-points">{{.Points}}</p>
+                            <h3 class="wine-winery">{{.Winery}}</h3>
                             <h3 class="wine-winery">{{.Winery}}</h3>
                             <p class="wine-variety">{{.Variety}}</p>
                             <div class="wine-footer">
@@ -114,12 +116,7 @@
                         </div>
                     {{end}}
                 </div>
-
-                <div class="more-button-container">
-                    <a href="http://localhost:8080/TousLesVins" class="mobile-nav-link">
-                        <button class="more-button">Voir plus de vins</button>
-                    </a>
-                </div>
+            {{end}}
             </section>
         </div>
     </main>
