@@ -12,7 +12,8 @@ type VinsPays struct {
 }
 
 type DataMonde struct {
-	Vins []VinsPays
+	IsConnect bool
+	Vins      []VinsPays
 }
 
 func VinsMondePage(w http.ResponseWriter, r *http.Request) {
@@ -42,13 +43,16 @@ func VinsMondePageGet(w http.ResponseWriter, r *http.Request) {
 		} else {
 			Instance.WineList = wines // Prendre tous les vins s'il y en a moins de 3
 		}
+		fmt.Println(Instance)
+		fmt.Println("")
+		fmt.Println("")
 
 		Final = append(Final, Instance)
 	}
-	fmt.Println(Final)
 
 	data := DataMonde{
-		Vins: Final,
+		Vins:      Final,
+		IsConnect: false,
 	}
 	tmpl.Execute(w, data)
 }
