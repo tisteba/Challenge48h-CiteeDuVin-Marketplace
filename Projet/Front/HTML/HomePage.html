@@ -7,6 +7,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/homepage.css">
+    <style>
+        /* Style du diaporama */
+        .diaporama {
+            width: 100%;
+            height: 500px; /* Reduced from 1000px for better proportions */
+            position: relative;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            margin-bottom: 2rem; /* Added space below slideshow */
+        }
+        
+        .diaporama img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .diaporama img.active {
+            opacity: 1;
+        }
+        
+        /* Style du texte superposé */
+        .diaporama-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+            width: 80%;
+            max-width: 800px;
+        }
+        
+        .diaporama-text h2 {
+            font-size: 2.5em; /* Slightly smaller for better proportions */
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+        
+        .diaporama-text p {
+            font-size: 1.2em; /* Slightly smaller for better proportions */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            line-height: 1.4;
+        }
+        
+        /* Overlay sombre pour meilleure lisibilité */
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 5;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .diaporama {
+                height: 300px;
+            }
+            
+            .diaporama-text h2 {
+                font-size: 1.8em;
+            }
+            
+            .diaporama-text p {
+                font-size: 1em;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -113,6 +190,23 @@
         </div>
     </header>
 
+    <!-- Slideshow Section -->
+    <div class="diaporama">
+        <!-- Overlay for text -->
+        <div class="image-overlay"></div>
+        
+        <!-- Slideshow images -->
+        <img src="https://www.laciteduvin.com/derivation/image/original/eyJpZCI6InBob3RvLzQwOS9pbWFnZS9lNzJhYTlhNTk5MzdlNmE2MzgwM2VmMmY1NDQ2Y2YxMi5qcGciLCJzdG9yYWdlIjoic3RvcmUifQ?signature=5fa4683177e5382c5d8ad785a0bcede5b7b4f02305249b09017a81047805cb42   " class="active" alt="Pont">
+        <img src="https://www.laciteduvin.com/derivation/image/original/eyJpZCI6InBob3RvLzQxMC9pbWFnZS9mNGM4MzliN2YyNzUxNzJiZTk4OTAzYzc5NDBmYjEzZC5qcGciLCJzdG9yYWdlIjoic3RvcmUifQ?signature=c244f6b53e7f5ce4f95ce97849e157e1bc3e73d7caa1406f8dad9100d10fc2b6" alt="Verre">
+        <img src="https://www.laciteduvin.com/derivation/image/original/eyJpZCI6InBob3RvLzQwOC9pbWFnZS9iNmVjZTM5MTkyZmQ2NjNmNTY2ZWU5NTRlNGFiNjM2OS5qcGciLCJzdG9yYWdlIjoic3RvcmUifQ?signature=1a9726b5c827212473447e705bb3e752e8c926e962e08cc1d8a985be44d0745d" alt="Cité du Vin">
+        
+        <!-- Overlay text -->
+        <div class="diaporama-text">
+            <h2>Bienvenue sur notre Marketplace</h2>
+            <p>Découvrez notre sélection exceptionnelle de vins du monde entier</p>
+        </div>
+    </div>
+
     <main class="main-container">
         <div class="main-content">
             <section class="wine-section">
@@ -153,8 +247,6 @@
                 </div>
             </section>
         </div>
-
-
     </main>
 
     <footer class="footer">
@@ -190,17 +282,37 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle - Make sure this is in your HTML
+        // Mobile Menu Toggle
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileMenuClose = document.getElementById('mobile-menu-close');
         const mobileMenu = document.getElementById('mobile-menu');
     
         mobileMenuToggle.addEventListener('click', () => {
-            mobileMenu.style.display = 'block'; // Changed from classList to style
+            mobileMenu.style.display = 'block';
         });
     
         mobileMenuClose.addEventListener('click', () => {
-            mobileMenu.style.display = 'none'; // Changed from classList to style
+            mobileMenu.style.display = 'none';
+        });
+
+        // Slideshow functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.diaporama img');
+            let currentIndex = 0;
+            
+            function showNextImage() {
+                // Hide current image
+                images[currentIndex].classList.remove('active');
+                
+                // Move to next image
+                currentIndex = (currentIndex + 1) % images.length;
+                
+                // Show new image
+                images[currentIndex].classList.add('active');
+            }
+            
+            // Change image every 5 seconds (5000 ms)
+            setInterval(showNextImage, 5000);
         });
     </script>
 </body>
