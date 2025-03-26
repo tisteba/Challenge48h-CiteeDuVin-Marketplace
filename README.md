@@ -4,7 +4,7 @@
 - Baptiste Renou
 - Dulou Adrien
 - Johann Chiarotto
-- Théo 
+- Théo Darribau
 
 ## 🚀 Mission
 Plateforme digitale conçue pour **augmenter le chiffre d'affaires** de la Cité du Vin de Bordeaux en transformant les visiteurs en clients fidèles grâce à une expérience vinicole complète.
