@@ -100,7 +100,12 @@
                                 {{else}}
                                     <span class="wine-price">{{$wine.Price}}</span>
                                 {{end}}
-                                <button class="add-button">Ajouter</button>
+
+                                {{if eq $wine.Price 0}}
+                                    <button class="add-button">Enchérir</button>
+                                {{else}}
+                                    <button class="add-button">Ajouter</button>
+                                {{end}}
                             </div>
                         </div>
                     {{end}}
