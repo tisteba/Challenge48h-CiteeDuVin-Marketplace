@@ -2,6 +2,7 @@ package Fonctions
 
 import (
 	"html/template"
+	db "marketplace/DataBase"
 	"net/http"
 )
 
@@ -11,8 +12,9 @@ type VinsPays struct {
 }
 
 type DataMonde struct {
-	IsConnect bool
 	Vins      []VinsPays
+	IsConnect bool
+	User      db.DB
 }
 
 func VinsMondePage(w http.ResponseWriter, r *http.Request) {
@@ -46,9 +48,16 @@ func VinsMondePageGet(w http.ResponseWriter, r *http.Request) {
 		Final = append(Final, Instance)
 	}
 
+	cookie, err := r.Cookie("user_id")
+	if err != nil {
+		http.Redirect(w, r, "/Connexion", http.StatusSeeOther)
+		return
+	}
+
 	data := DataMonde{
 		Vins:      Final,
-		IsConnect: false,
+		IsConnect: IsConnectStock,
+		User:      db.GetUser(cookie.Value),
 	}
 	tmpl.Execute(w, data)
 }
